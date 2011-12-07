@@ -23,4 +23,14 @@
 	<bean class="org.springframework.web.servlet.mvc.annotation.DefaultAnnotationHandlerMapping"/>
 
 	<context:component-scan base-package="org.openmrs.module.jmx.web.controller" />
+	
+	<bean id="exporter" class="org.springframework.jmx.export.MBeanExporter" lazy-init="false">
+		<property name="beans">
+			<map>
+				<entry key="OpenMRS:name=Server" value-ref="jmxServerBean"/>
+			</map>
+		</property>
+	</bean>
+	
+	<bean id="jmxServerBean" class="org.openmrs.module.jmx.OpenMRSServer" />
 </beans>

@@ -14,11 +14,6 @@
 
 package org.openmrs.module.jmx;
 
-import java.lang.management.ManagementFactory;
-
-import javax.management.MBeanServer;
-import javax.management.ObjectName;
-
 import org.apache.commons.logging.Log; 
 import org.apache.commons.logging.LogFactory;
 import org.openmrs.module.BaseModuleActivator;
@@ -36,20 +31,6 @@ public class JMXActivator extends BaseModuleActivator {
 	@Override
 	public void started() {
 		log.info("Starting JMX Module");
-		 
-		try {
-			// TODO Use implementation id to generate name
-			ObjectName beanName = new ObjectName(Constants.MBEAN_NAME);
-			OpenMRSServer serverBean = new OpenMRSServer(); 
-			
-			MBeanServer beanServer = ManagementFactory.getPlatformMBeanServer();
-			beanServer.registerMBean(serverBean, beanName);
-			
-			log.info("Registered OpenMRS MBean");
-			
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
 	}
 
 	/**
@@ -58,17 +39,5 @@ public class JMXActivator extends BaseModuleActivator {
 	@Override
 	public void stopped() {
 		log.info("Shutting down JMX Module");
-		
-		try {
-			ObjectName beanName = new ObjectName(Constants.MBEAN_NAME);
-				
-			MBeanServer beanServer = ManagementFactory.getPlatformMBeanServer();
-			beanServer.unregisterMBean(beanName);
-				
-			log.info("Unregistered OpenMRS MBean");
-				
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
 	}
 }

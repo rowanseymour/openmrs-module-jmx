@@ -14,11 +14,16 @@
 
 package org.openmrs.module.jmx;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Map;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.openmrs.api.context.Context;
+import org.openmrs.module.Module;
+import org.openmrs.module.ModuleFactory;
+import org.openmrs.util.OpenmrsConstants;
 
 /**
  * JMX management bean implementation
@@ -29,14 +34,19 @@ public class OpenMRSServer implements OpenMRSServerMBean {
 	
 	@Override
 	public String getVersion() {
+		Context.openSession();
+		Context.addProxyPrivilege(OpenmrsConstants.PRIV_VIEW_ADMIN_FUNCTIONS);
 		Map<String, String> sysVars = Context.getAdministrationService().getSystemVariables();
-		log.warn("OpenMRS version is: " + sysVars.get("OPENMRS_VERSION"));
+		Context.removeProxyPrivilege(OpenmrsConstants.PRIV_VIEW_ADMIN_FUNCTIONS);
+		Context.closeSession();
 		return sysVars.get("OPENMRS_VERSION");
 	}
 
 	@Override
-	public int getUserSessions() {
-		// TODO implement
-		return 707;
+	public String[] getRunningModules() {
+		List<String> modules = new ArrayList<String>();
+		for (Module module : ModuleFactory.getStartedModules())
+			modules.add(module.getName() + "|" + module.getVersion());
+		return modules.toArray(new String[] {});
 	}
 }

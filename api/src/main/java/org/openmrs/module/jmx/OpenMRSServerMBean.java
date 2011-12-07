@@ -26,8 +26,8 @@ public interface OpenMRSServerMBean {
 	public String getVersion();
 	
 	/**
-	 * Gets the number of current user sessions
-	 * @return the number
+	 * Gets an array of running modules
+	 * @return the array
 	 */
-	public int getUserSessions();
+	public String[] getRunningModules();
 }

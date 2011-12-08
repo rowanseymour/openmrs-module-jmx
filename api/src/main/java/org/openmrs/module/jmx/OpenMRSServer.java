@@ -23,7 +23,7 @@ import org.apache.commons.logging.LogFactory;
 import org.openmrs.api.context.Context;
 import org.openmrs.module.Module;
 import org.openmrs.module.ModuleFactory;
-import org.openmrs.util.OpenmrsConstants;
+import org.openmrs.util.PrivilegeConstants;
 
 /**
  * JMX management bean implementation
@@ -35,9 +35,9 @@ public class OpenMRSServer implements OpenMRSServerMBean {
 	@Override
 	public String getVersion() {
 		Context.openSession();
-		Context.addProxyPrivilege(OpenmrsConstants.PRIV_VIEW_ADMIN_FUNCTIONS);
+		Context.addProxyPrivilege(PrivilegeConstants.VIEW_ADMIN_FUNCTIONS);
 		Map<String, String> sysVars = Context.getAdministrationService().getSystemVariables();
-		Context.removeProxyPrivilege(OpenmrsConstants.PRIV_VIEW_ADMIN_FUNCTIONS);
+		Context.removeProxyPrivilege(PrivilegeConstants.VIEW_ADMIN_FUNCTIONS);
 		Context.closeSession();
 		return sysVars.get("OPENMRS_VERSION");
 	}
@@ -46,7 +46,7 @@ public class OpenMRSServer implements OpenMRSServerMBean {
 	public String[] getRunningModules() {
 		List<String> modules = new ArrayList<String>();
 		for (Module module : ModuleFactory.getStartedModules())
-			modules.add(module.getName() + "|" + module.getVersion());
+			modules.add(module.getModuleId() + " (" + module.getVersion() + ")");
 		return modules.toArray(new String[] {});
 	}
 }

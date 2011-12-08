@@ -24,13 +24,19 @@
 
 	<context:component-scan base-package="org.openmrs.module.jmx.web.controller" />
 	
+	<!-- Must come before the JMX beans as they require this to be initialized -->
+	<bean class="org.openmrs.module.jmx.web.util.ContextProvider" />
+	
 	<bean id="exporter" class="org.springframework.jmx.export.MBeanExporter" lazy-init="false">
 		<property name="beans">
 			<map>
-				<entry key="OpenMRS:name=Server" value-ref="jmxServerBean"/>
+				<entry key="server" value-ref="jmxServerBean"/>
 			</map>
 		</property>
+		<property name="namingStrategy" ref="jmxBeanNamingStrategy" />
 	</bean>
 	
 	<bean id="jmxServerBean" class="org.openmrs.module.jmx.OpenMRSServer" />
+	
+	<bean id="jmxBeanNamingStrategy" class="org.openmrs.module.jmx.web.MBeanNamingStrategy" />
 </beans>

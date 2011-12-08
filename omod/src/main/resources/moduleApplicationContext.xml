@@ -36,7 +36,7 @@
 		<property name="namingStrategy" ref="jmxBeanNamingStrategy" />
 	</bean>
 	
-	<bean id="jmxCoreBean" class="org.openmrs.module.jmx.CoreBean" />
+	<bean id="jmxCoreBean" class="org.openmrs.module.jmx.CoreBeanImpl" />
 	
 	<bean id="jmxBeanNamingStrategy" class="org.openmrs.module.jmx.web.util.MBeanNamingStrategy" />
 </beans>

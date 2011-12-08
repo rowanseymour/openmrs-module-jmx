@@ -14,82 +14,35 @@
 
 package org.openmrs.module.jmx;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Map;
-
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
-import org.openmrs.api.context.Context;
-import org.openmrs.module.Module;
-import org.openmrs.module.ModuleFactory;
-import org.openmrs.util.PrivilegeConstants;
+import javax.management.MXBean;
 
 /**
- * OpenMRS Core JMX bean implementation
+ * OpenMRS core JMX bean interface
  */
-public class CoreBean implements CoreBeanMBean {
-
-	protected Log log = LogFactory.getLog(CoreBean.class);
+@MXBean
+public interface CoreBean {
 	
 	/**
-	 * @see org.openmrs.module.jmx.CoreBeanMBean#getVersion()
+	 * Gets the version name of OpenMRS
+	 * @return the version
 	 */
-	@Override
-	public String getVersion() {
-		return getSystemVariable("OPENMRS_VERSION");
-	}
+	public String getVersion();
 	
 	/**
-	 * @see org.openmrs.module.jmx.CoreBeanMBean#getDatabaseName()
+	 * Gets name of OpenMRS database
+	 * @return the database name
 	 */
-	@Override
-	public String getDatabaseName() {
-		return getSystemVariable("DATABASE_NAME");
-	}
-
-	/**
-	 * @see org.openmrs.module.jmx.CoreBeanMBean#getRunningModules()
-	 */
-	@Override
-	public String[] getRunningModules() {
-		List<String> modules = new ArrayList<String>();
-		for (Module module : ModuleFactory.getStartedModules())
-			modules.add(module.getModuleId() + " (" + module.getVersion() + ")");
-		return modules.toArray(new String[] {});
-	}
+	public String getDatabaseName();
 	
 	/**
-	 * @see org.openmrs.module.jmx.CoreBeanMBean#getDatabaseName()
+	 * Gets the mail server in the format [host]:[port]
+	 * @return the mail server
 	 */
-	@Override
-	public String getMailServer() {
-		return getGlobalProperty("mail.smtp_host") + ":" + getGlobalProperty("mail.smtp_port");
-	}
+	public String getMailServer();
 	
 	/**
-	 * Gets the value of a system variable
-	 * @param key the variable key
-	 * @return the variable value
+	 * Gets an array of running modules
+	 * @return the array
 	 */
-	private String getSystemVariable(String key) {
-		Context.openSession();
-		Context.addProxyPrivilege(PrivilegeConstants.VIEW_ADMIN_FUNCTIONS);
-		Map<String, String> sysVars = Context.getAdministrationService().getSystemVariables();
-		Context.removeProxyPrivilege(PrivilegeConstants.VIEW_ADMIN_FUNCTIONS);
-		Context.closeSession();
-		return sysVars.get(key);
-	}
-	
-	/**
-	 * Gets the value of a global property
-	 * @param key the property key
-	 * @return the property value
-	 */
-	private String getGlobalProperty(String key) {
-		Context.openSession();
-		String value = Context.getAdministrationService().getGlobalProperty(key);
-		Context.closeSession();
-		return value;
-	}
+	public String[] getRunningModules();	
 }

@@ -1,0 +1,6 @@
+JMX Module for OpenMRS
+=======================================
+
+This module exposes some OpenMRS system data such as version and running modules via the container's MBean server (which must be enabled)
+
+Requires OpenMRS 1.8.3

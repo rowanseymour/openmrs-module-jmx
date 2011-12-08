@@ -12,12 +12,11 @@
  * Copyright (C) OpenMRS, LLC.  All Rights Reserved.
  */
 
-package org.openmrs.module.jmx.web;
+package org.openmrs.module.jmx.web.util;
 
 import javax.management.MalformedObjectNameException;
 import javax.management.ObjectName;
 
-import org.openmrs.module.jmx.web.util.ContextProvider;
 import org.springframework.jmx.export.naming.ObjectNamingStrategy;
 
 /**
@@ -37,7 +36,7 @@ public class MBeanNamingStrategy implements ObjectNamingStrategy {
 			if (ctxPath.charAt(0) == '/')
 				ctxPath = ctxPath.substring(1);
 			
-			return new ObjectName("OpenMRS:type=Servers,name=" + ctxPath);
+			return new ObjectName("OpenMRS:path=" + ctxPath + ",name=Server");
 		}
 		return new ObjectName("OpenMRS:name=Unknown");
 	}

@@ -38,5 +38,5 @@
 	
 	<bean id="jmxServerBean" class="org.openmrs.module.jmx.OpenMRSServer" />
 	
-	<bean id="jmxBeanNamingStrategy" class="org.openmrs.module.jmx.web.MBeanNamingStrategy" />
+	<bean id="jmxBeanNamingStrategy" class="org.openmrs.module.jmx.web.util.MBeanNamingStrategy" />
 </beans>

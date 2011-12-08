@@ -41,8 +41,14 @@ public interface CoreBean {
 	public String getMailServer();
 	
 	/**
-	 * Gets an array of running modules
+	 * Gets an array of started modules (ids and versions)
 	 * @return the array
 	 */
-	public String[] getRunningModules();	
+	public String[] getStartedModules();
+	
+	/**
+	 * Gets an array of stopped modules (ids and versions)
+	 * @return the array
+	 */
+	public String[] getStoppedModules();
 }

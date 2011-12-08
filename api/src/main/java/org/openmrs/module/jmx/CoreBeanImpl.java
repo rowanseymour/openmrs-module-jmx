@@ -47,17 +47,6 @@ public class CoreBeanImpl implements CoreBean {
 	public String getDatabaseName() {
 		return getSystemVariable("DATABASE_NAME");
 	}
-
-	/**
-	 * @see org.openmrs.module.jmx.CoreBean#getRunningModules()
-	 */
-	@Override
-	public String[] getRunningModules() {
-		List<String> modules = new ArrayList<String>();
-		for (Module module : ModuleFactory.getStartedModules())
-			modules.add(module.getModuleId() + " (" + module.getVersion() + ")");
-		return modules.toArray(new String[] {});
-	}
 	
 	/**
 	 * @see org.openmrs.module.jmx.CoreBean#getDatabaseName()
@@ -65,6 +54,30 @@ public class CoreBeanImpl implements CoreBean {
 	@Override
 	public String getMailServer() {
 		return getGlobalProperty("mail.smtp_host") + ":" + getGlobalProperty("mail.smtp_port");
+	}
+
+	/**
+	 * @see org.openmrs.module.jmx.CoreBean#getStartedModules()
+	 */
+	@Override
+	public String[] getStartedModules() {
+		List<String> modules = new ArrayList<String>();
+		for (Module module : ModuleFactory.getStartedModules())
+			modules.add(module.getModuleId() + " (" + module.getVersion() + ")");
+		return modules.toArray(new String[] {});
+	}
+	
+	/**
+	 * @see org.openmrs.module.jmx.CoreBean#getLoadedModules()
+	 */
+	@Override
+	public String[] getStoppedModules() {
+		List<String> modules = new ArrayList<String>();
+		for (Module module : ModuleFactory.getLoadedModules()) {
+			if (!ModuleFactory.isModuleStarted(module))
+				modules.add(module.getModuleId() + " (" + module.getVersion() + ")");
+		}
+		return modules.toArray(new String[] {});
 	}
 	
 	/**

@@ -12,7 +12,7 @@
  * Copyright (C) OpenMRS, LLC.  All Rights Reserved.
  */
 
-package org.openmrs.module.jmx.web.util;
+package org.openmrs.module.jmx.util;
 
 import javax.servlet.ServletContext;
 

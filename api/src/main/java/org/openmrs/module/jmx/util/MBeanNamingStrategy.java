@@ -12,11 +12,14 @@
  * Copyright (C) OpenMRS, LLC.  All Rights Reserved.
  */
 
-package org.openmrs.module.jmx.web.util;
+package org.openmrs.module.jmx.util;
 
 import javax.management.MalformedObjectNameException;
 import javax.management.ObjectName;
+import javax.servlet.ServletContext;
 
+import org.apache.commons.logging.Log;
+import org.apache.commons.logging.LogFactory;
 import org.springframework.jmx.export.naming.ObjectNamingStrategy;
 
 /**
@@ -25,19 +28,23 @@ import org.springframework.jmx.export.naming.ObjectNamingStrategy;
  */
 public class MBeanNamingStrategy implements ObjectNamingStrategy {
 
+	protected Log log = LogFactory.getLog(MBeanNamingStrategy.class);
+	
 	/**
 	 * @see org.springframework.jmx.export.naming.ObjectNamingStrategy#getObjectName(Object, String)
 	 */
 	@Override
 	public ObjectName getObjectName(Object bean, String key) throws MalformedObjectNameException {
-		if ("server".equals(key)) {
-			// Server name is based on the context path, minus the preceding slash
-			String ctxPath = ContextProvider.getServletContext().getContextPath();
+		// Server name is based on the context path, minus the preceding slash
+		ServletContext ctx = ContextProvider.getServletContext();
+		
+		if (ctx != null) {
+			String ctxPath = ctx.getContextPath();
 			if (ctxPath.charAt(0) == '/')
 				ctxPath = ctxPath.substring(1);
-			
-			return new ObjectName("OpenMRS:path=" + ctxPath + ",name=Core");
+				
+			return new ObjectName("OpenMRS:path=" + ctxPath + ",name=" + key);
 		}
-		return new ObjectName("OpenMRS:name=Unknown");
+		return new ObjectName("OpenMRS:path=Unknown,name=" + key);
 	}
 }

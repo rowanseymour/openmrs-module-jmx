@@ -30,13 +30,13 @@
 	<bean id="exporter" class="org.springframework.jmx.export.MBeanExporter" lazy-init="false">
 		<property name="beans">
 			<map>
-				<entry key="server" value-ref="jmxServerBean"/>
+				<entry key="server" value-ref="jmxCoreBean"/>
 			</map>
 		</property>
 		<property name="namingStrategy" ref="jmxBeanNamingStrategy" />
 	</bean>
 	
-	<bean id="jmxServerBean" class="org.openmrs.module.jmx.OpenMRSServer" />
+	<bean id="jmxCoreBean" class="org.openmrs.module.jmx.CoreBean" />
 	
 	<bean id="jmxBeanNamingStrategy" class="org.openmrs.module.jmx.web.util.MBeanNamingStrategy" />
 </beans>

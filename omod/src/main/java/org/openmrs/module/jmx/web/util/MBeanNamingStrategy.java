@@ -20,8 +20,8 @@ import javax.management.ObjectName;
 import org.springframework.jmx.export.naming.ObjectNamingStrategy;
 
 /**
- * Used to dynamically name the server MBeans based on context path. This means
- * multiple OpenMRS intances can be monitored at the same time
+ * Used to dynamically name the core MBeans based on context path. This means
+ * multiple OpenMRS instances can be monitored at the same time
  */
 public class MBeanNamingStrategy implements ObjectNamingStrategy {
 
@@ -36,7 +36,7 @@ public class MBeanNamingStrategy implements ObjectNamingStrategy {
 			if (ctxPath.charAt(0) == '/')
 				ctxPath = ctxPath.substring(1);
 			
-			return new ObjectName("OpenMRS:path=" + ctxPath + ",name=Server");
+			return new ObjectName("OpenMRS:path=" + ctxPath + ",name=Core");
 		}
 		return new ObjectName("OpenMRS:name=Unknown");
 	}

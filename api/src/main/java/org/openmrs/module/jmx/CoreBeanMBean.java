@@ -15,9 +15,9 @@
 package org.openmrs.module.jmx;
 
 /**
- * JMX management bean interface
+ * OpenMRS core JMX bean interface
  */
-public interface OpenMRSServerMBean {
+public interface CoreBeanMBean {
 	
 	/**
 	 * Gets the version name of OpenMRS

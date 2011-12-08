@@ -26,14 +26,14 @@ import org.openmrs.module.ModuleFactory;
 import org.openmrs.util.PrivilegeConstants;
 
 /**
- * JMX management bean implementation
+ * OpenMRS Core JMX bean implementation
  */
-public class OpenMRSServer implements OpenMRSServerMBean {
+public class CoreBean implements CoreBeanMBean {
 
-	protected Log log = LogFactory.getLog(OpenMRSServer.class);
+	protected Log log = LogFactory.getLog(CoreBean.class);
 	
 	/**
-	 * @see org.openmrs.module.jmx.OpenMRSServerMBean#getVersion()
+	 * @see org.openmrs.module.jmx.CoreBeanMBean#getVersion()
 	 */
 	@Override
 	public String getVersion() {
@@ -41,7 +41,7 @@ public class OpenMRSServer implements OpenMRSServerMBean {
 	}
 	
 	/**
-	 * @see org.openmrs.module.jmx.OpenMRSServerMBean#getDatabaseName()
+	 * @see org.openmrs.module.jmx.CoreBeanMBean#getDatabaseName()
 	 */
 	@Override
 	public String getDatabaseName() {
@@ -49,7 +49,7 @@ public class OpenMRSServer implements OpenMRSServerMBean {
 	}
 
 	/**
-	 * @see org.openmrs.module.jmx.OpenMRSServerMBean#getRunningModules()
+	 * @see org.openmrs.module.jmx.CoreBeanMBean#getRunningModules()
 	 */
 	@Override
 	public String[] getRunningModules() {
@@ -60,7 +60,7 @@ public class OpenMRSServer implements OpenMRSServerMBean {
 	}
 	
 	/**
-	 * @see org.openmrs.module.jmx.OpenMRSServerMBean#getDatabaseName()
+	 * @see org.openmrs.module.jmx.CoreBeanMBean#getDatabaseName()
 	 */
 	@Override
 	public String getMailServer() {

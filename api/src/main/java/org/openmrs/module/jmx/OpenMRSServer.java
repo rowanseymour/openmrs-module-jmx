@@ -32,21 +32,64 @@ public class OpenMRSServer implements OpenMRSServerMBean {
 
 	protected Log log = LogFactory.getLog(OpenMRSServer.class);
 	
+	/**
+	 * @see org.openmrs.module.jmx.OpenMRSServerMBean#getVersion()
+	 */
 	@Override
 	public String getVersion() {
-		Context.openSession();
-		Context.addProxyPrivilege(PrivilegeConstants.VIEW_ADMIN_FUNCTIONS);
-		Map<String, String> sysVars = Context.getAdministrationService().getSystemVariables();
-		Context.removeProxyPrivilege(PrivilegeConstants.VIEW_ADMIN_FUNCTIONS);
-		Context.closeSession();
-		return sysVars.get("OPENMRS_VERSION");
+		return getSystemVariable("OPENMRS_VERSION");
+	}
+	
+	/**
+	 * @see org.openmrs.module.jmx.OpenMRSServerMBean#getDatabaseName()
+	 */
+	@Override
+	public String getDatabaseName() {
+		return getSystemVariable("DATABASE_NAME");
 	}
 
+	/**
+	 * @see org.openmrs.module.jmx.OpenMRSServerMBean#getRunningModules()
+	 */
 	@Override
 	public String[] getRunningModules() {
 		List<String> modules = new ArrayList<String>();
 		for (Module module : ModuleFactory.getStartedModules())
 			modules.add(module.getModuleId() + " (" + module.getVersion() + ")");
 		return modules.toArray(new String[] {});
+	}
+	
+	/**
+	 * @see org.openmrs.module.jmx.OpenMRSServerMBean#getDatabaseName()
+	 */
+	@Override
+	public String getMailServer() {
+		return getGlobalProperty("mail.smtp_host") + ":" + getGlobalProperty("mail.smtp_port");
+	}
+	
+	/**
+	 * Gets the value of a system variable
+	 * @param key the variable key
+	 * @return the variable value
+	 */
+	private String getSystemVariable(String key) {
+		Context.openSession();
+		Context.addProxyPrivilege(PrivilegeConstants.VIEW_ADMIN_FUNCTIONS);
+		Map<String, String> sysVars = Context.getAdministrationService().getSystemVariables();
+		Context.removeProxyPrivilege(PrivilegeConstants.VIEW_ADMIN_FUNCTIONS);
+		Context.closeSession();
+		return sysVars.get(key);
+	}
+	
+	/**
+	 * Gets the value of a global property
+	 * @param key the property key
+	 * @return the property value
+	 */
+	private String getGlobalProperty(String key) {
+		Context.openSession();
+		String value = Context.getAdministrationService().getGlobalProperty(key);
+		Context.closeSession();
+		return value;
 	}
 }

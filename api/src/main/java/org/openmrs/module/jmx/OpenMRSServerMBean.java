@@ -26,8 +26,20 @@ public interface OpenMRSServerMBean {
 	public String getVersion();
 	
 	/**
+	 * Gets name of OpenMRS database
+	 * @return the database name
+	 */
+	public String getDatabaseName();
+	
+	/**
+	 * Gets the mail server in the format [host]:[port]
+	 * @return the mail server
+	 */
+	public String getMailServer();
+	
+	/**
 	 * Gets an array of running modules
 	 * @return the array
 	 */
-	public String[] getRunningModules();
+	public String[] getRunningModules();	
 }

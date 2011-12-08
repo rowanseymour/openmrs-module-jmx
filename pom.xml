@@ -8,6 +8,11 @@
 	<packaging>pom</packaging>
 	<name>JMX Module</name>
 	<description>Exposes server information via JMX</description>
+	
+	<organization>
+		<url>http://openmrs.org</url>
+		<name>OpenMRS</name>
+	</organization>
 
 	<modules>
 		<module>api</module>
@@ -96,5 +101,4 @@
 			</snapshots>
 		</pluginRepository>
 	</pluginRepositories>
-
 </project>

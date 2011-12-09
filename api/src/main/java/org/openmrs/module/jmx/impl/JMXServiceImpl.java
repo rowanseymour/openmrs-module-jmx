@@ -19,13 +19,13 @@ import java.lang.management.ManagementFactory;
 import javax.management.MBeanServer;
 import javax.management.MalformedObjectNameException;
 import javax.management.ObjectName;
+import javax.servlet.ServletContext;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.openmrs.api.impl.BaseOpenmrsService;
 import org.openmrs.module.jmx.JMXService;
 import org.openmrs.module.jmx.util.ContextProvider;
-import org.openmrs.module.jmx.util.MBeanNamingStrategy;
 
 /**
  * Implementation of JMX service
@@ -39,10 +39,8 @@ public class JMXServiceImpl extends BaseOpenmrsService implements JMXService {
 	 */
 	@Override
 	public void registerBean(String name, Object bean) {
-		MBeanNamingStrategy naming = (MBeanNamingStrategy)ContextProvider.getApplicationContext().getBean("jmxBeanNamingStrategy");
-		
 		try {
-			ObjectName objName = naming.getObjectName(bean, name);
+			ObjectName objName = getObjectName(name);
 			MBeanServer beanServer = ManagementFactory.getPlatformMBeanServer();
 			if (beanServer.isRegistered(objName))
 				beanServer.unregisterMBean(objName);
@@ -63,10 +61,8 @@ public class JMXServiceImpl extends BaseOpenmrsService implements JMXService {
 	 */
 	@Override
 	public void unregisterBean(String name) {
-		MBeanNamingStrategy naming = (MBeanNamingStrategy)ContextProvider.getApplicationContext().getBean("jmxBeanNamingStrategy");
-		
 		try {
-			ObjectName objName = naming.getObjectName(null, name);
+			ObjectName objName = getObjectName(name);
 			MBeanServer beanServer = ManagementFactory.getPlatformMBeanServer();
 			if (beanServer.isRegistered(objName))
 				beanServer.unregisterMBean(objName);
@@ -78,5 +74,19 @@ public class JMXServiceImpl extends BaseOpenmrsService implements JMXService {
 		} catch (Exception e) {
 			log.error("Unable to unregister MBean", e);
 		}
+	}
+	
+	private ObjectName getObjectName(String beanName) throws MalformedObjectNameException {
+		// Server name is based on the context path, minus the preceding slash
+		ServletContext ctx = ContextProvider.getServletContext();
+		
+		if (ctx != null) {
+			String ctxPath = ctx.getContextPath();
+			if (ctxPath.charAt(0) == '/')
+				ctxPath = ctxPath.substring(1);
+				
+			return new ObjectName("OpenMRS:path=" + ctxPath + ",name=" + beanName);
+		}
+		return new ObjectName("OpenMRS:path=Unknown,name=" + beanName);
 	}
 }

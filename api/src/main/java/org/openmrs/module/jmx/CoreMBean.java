@@ -20,7 +20,7 @@ import javax.management.MXBean;
  * OpenMRS core JMX bean interface
  */
 @MXBean
-public interface CoreBean {
+public interface CoreMBean {
 	
 	/**
 	 * Gets the version name of OpenMRS

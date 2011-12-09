@@ -28,12 +28,12 @@ import org.openmrs.util.PrivilegeConstants;
 /**
  * OpenMRS Core JMX bean implementation
  */
-public class CoreBeanImpl implements CoreBean {
+public class CoreMBeanImpl implements CoreMBean {
 
-	protected Log log = LogFactory.getLog(CoreBeanImpl.class);
+	protected Log log = LogFactory.getLog(CoreMBeanImpl.class);
 	
 	/**
-	 * @see org.openmrs.module.jmx.CoreBean#getVersion()
+	 * @see org.openmrs.module.jmx.CoreMBean#getVersion()
 	 */
 	@Override
 	public String getVersion() {
@@ -41,7 +41,7 @@ public class CoreBeanImpl implements CoreBean {
 	}
 	
 	/**
-	 * @see org.openmrs.module.jmx.CoreBean#getDatabaseName()
+	 * @see org.openmrs.module.jmx.CoreMBean#getDatabaseName()
 	 */
 	@Override
 	public String getDatabaseName() {
@@ -49,7 +49,7 @@ public class CoreBeanImpl implements CoreBean {
 	}
 	
 	/**
-	 * @see org.openmrs.module.jmx.CoreBean#getDatabaseName()
+	 * @see org.openmrs.module.jmx.CoreMBean#getDatabaseName()
 	 */
 	@Override
 	public String getMailServer() {
@@ -57,7 +57,7 @@ public class CoreBeanImpl implements CoreBean {
 	}
 
 	/**
-	 * @see org.openmrs.module.jmx.CoreBean#getStartedModules()
+	 * @see org.openmrs.module.jmx.CoreMBean#getStartedModules()
 	 */
 	@Override
 	public String[] getStartedModules() {
@@ -68,7 +68,7 @@ public class CoreBeanImpl implements CoreBean {
 	}
 	
 	/**
-	 * @see org.openmrs.module.jmx.CoreBean#getLoadedModules()
+	 * @see org.openmrs.module.jmx.CoreMBean#getLoadedModules()
 	 */
 	@Override
 	public String[] getStoppedModules() {

@@ -16,6 +16,7 @@ package org.openmrs.module.jmx;
 
 import org.apache.commons.logging.Log; 
 import org.apache.commons.logging.LogFactory;
+import org.openmrs.api.context.Context;
 import org.openmrs.module.BaseModuleActivator;
 
 /**
@@ -31,6 +32,13 @@ public class JMXActivator extends BaseModuleActivator {
 	@Override
 	public void started() {
 		log.info("Starting JMX Module");
+		
+		// Register core bean
+		JMXService svc = Context.getService(JMXService.class);
+		CoreMBean bean = new CoreMBeanImpl();
+		svc.registerBean("Core", bean);
+		
+		log.info("Registered core MBean");
 	}
 
 	/**
@@ -39,5 +47,11 @@ public class JMXActivator extends BaseModuleActivator {
 	@Override
 	public void stopped() {
 		log.info("Shutting down JMX Module");
+		
+		// Unregister core bean
+		JMXService svc = Context.getService(JMXService.class);
+		svc.unregisterBean("Core");
+				
+		log.info("Registered core MBean");
 	}
 }

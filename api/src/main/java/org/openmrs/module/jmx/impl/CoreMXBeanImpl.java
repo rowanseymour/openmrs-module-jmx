@@ -12,7 +12,7 @@
  * Copyright (C) OpenMRS, LLC.  All Rights Reserved.
  */
 
-package org.openmrs.module.jmx;
+package org.openmrs.module.jmx.impl;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -23,17 +23,18 @@ import org.apache.commons.logging.LogFactory;
 import org.openmrs.api.context.Context;
 import org.openmrs.module.Module;
 import org.openmrs.module.ModuleFactory;
+import org.openmrs.module.jmx.CoreMXBean;
 import org.openmrs.util.PrivilegeConstants;
 
 /**
  * OpenMRS Core JMX bean implementation
  */
-public class CoreMBeanImpl implements CoreMBean {
+public class CoreMXBeanImpl implements CoreMXBean {
 
-	protected Log log = LogFactory.getLog(CoreMBeanImpl.class);
+	protected Log log = LogFactory.getLog(CoreMXBeanImpl.class);
 	
 	/**
-	 * @see org.openmrs.module.jmx.CoreMBean#getVersion()
+	 * @see org.openmrs.module.jmx.CoreMXBean#getVersion()
 	 */
 	@Override
 	public String getVersion() {
@@ -41,7 +42,7 @@ public class CoreMBeanImpl implements CoreMBean {
 	}
 	
 	/**
-	 * @see org.openmrs.module.jmx.CoreMBean#getDatabaseName()
+	 * @see org.openmrs.module.jmx.CoreMXBean#getDatabaseName()
 	 */
 	@Override
 	public String getDatabaseName() {
@@ -49,7 +50,7 @@ public class CoreMBeanImpl implements CoreMBean {
 	}
 	
 	/**
-	 * @see org.openmrs.module.jmx.CoreMBean#getDatabaseName()
+	 * @see org.openmrs.module.jmx.CoreMXBean#getDatabaseName()
 	 */
 	@Override
 	public String getMailServer() {
@@ -57,7 +58,7 @@ public class CoreMBeanImpl implements CoreMBean {
 	}
 
 	/**
-	 * @see org.openmrs.module.jmx.CoreMBean#getStartedModules()
+	 * @see org.openmrs.module.jmx.CoreMXBean#getStartedModules()
 	 */
 	@Override
 	public String[] getStartedModules() {
@@ -68,7 +69,7 @@ public class CoreMBeanImpl implements CoreMBean {
 	}
 	
 	/**
-	 * @see org.openmrs.module.jmx.CoreMBean#getLoadedModules()
+	 * @see org.openmrs.module.jmx.CoreMXBean#getLoadedModules()
 	 */
 	@Override
 	public String[] getStoppedModules() {
@@ -79,7 +80,7 @@ public class CoreMBeanImpl implements CoreMBean {
 		}
 		return modules.toArray(new String[] {});
 	}
-	
+
 	/**
 	 * Gets the value of a system variable
 	 * @param key the variable key

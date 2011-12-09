@@ -18,6 +18,7 @@ import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.openmrs.api.context.Context;
 import org.openmrs.module.BaseModuleActivator;
+import org.openmrs.module.jmx.impl.CoreMXBeanImpl;
 
 /**
  * Our module activator - registers the OpenMRS MBean
@@ -35,8 +36,8 @@ public class JMXActivator extends BaseModuleActivator {
 		
 		// Register core bean
 		JMXService svc = Context.getService(JMXService.class);
-		CoreMBean bean = new CoreMBeanImpl();
-		svc.registerBean("Core", bean);
+		CoreMXBean bean = new CoreMXBeanImpl();
+		svc.registerBean(Constants.CORE_BEAN_NAME, bean);
 		
 		log.info("Registered core MBean");
 	}
@@ -50,8 +51,8 @@ public class JMXActivator extends BaseModuleActivator {
 		
 		// Unregister core bean
 		JMXService svc = Context.getService(JMXService.class);
-		svc.unregisterBean("Core");
+		svc.unregisterBean(Constants.CORE_BEAN_NAME);
 				
-		log.info("Registered core MBean");
+		log.info("Unregistered core MBean");
 	}
 }

@@ -20,4 +20,6 @@ public class Constants {
 	public static final String MODULE_ID = "jmx";
 	
 	public static final String PRIV_MANAGE_JMX = "Manage JMX";
+	
+	public static final String CORE_BEAN_NAME = "core";
 }

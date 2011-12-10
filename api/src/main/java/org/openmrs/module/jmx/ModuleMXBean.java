@@ -23,6 +23,12 @@ import javax.management.MXBean;
 public interface ModuleMXBean {
 	
 	/**
+	 * Gets the name of the module
+	 * @return the name
+	 */
+	public String getName();
+	
+	/**
 	 * Gets the version of the module
 	 * @return the version name
 	 */

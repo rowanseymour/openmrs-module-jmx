@@ -31,6 +31,14 @@ public class ModuleMXBeanImpl implements ModuleMXBean {
 	public ModuleMXBeanImpl(String moduleId) {
 		this.moduleId = moduleId;
 	}
+	
+	/**
+	 * @see org.openmrs.module.jmx.ModuleMXBean#getName()
+	 */
+	@Override
+	public String getName() {
+		return ModuleFactory.getModuleById(moduleId).getName();
+	}
 
 	/**
 	 * @see org.openmrs.module.jmx.ModuleMXBean#getVersion()

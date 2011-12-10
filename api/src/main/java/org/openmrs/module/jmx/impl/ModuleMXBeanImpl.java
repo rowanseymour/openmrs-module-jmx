@@ -14,12 +14,37 @@
 
 package org.openmrs.module.jmx.impl;
 
+import org.openmrs.module.ModuleFactory;
 import org.openmrs.module.jmx.ModuleMXBean;
 
+/**
+ * Management bean implementation for an OpenMRS module
+ */
 public class ModuleMXBeanImpl implements ModuleMXBean {
+	
+	protected String moduleId;
+	
+	/**
+	 * Constructs a module management bean
+	 * @param moduleId the module id
+	 */
+	public ModuleMXBeanImpl(String moduleId) {
+		this.moduleId = moduleId;
+	}
 
+	/**
+	 * @see org.openmrs.module.jmx.ModuleMXBean#getVersion()
+	 */
 	@Override
 	public String getVersion() {
-		return "1.69-BETA";
+		return ModuleFactory.getModuleById(moduleId).getVersion();
+	}
+
+	/**
+	 * @see org.openmrs.module.jmx.ModuleMXBean#isStarted()
+	 */
+	@Override
+	public boolean isStarted() {
+		return ModuleFactory.getModuleById(moduleId).isStarted();
 	}
 }

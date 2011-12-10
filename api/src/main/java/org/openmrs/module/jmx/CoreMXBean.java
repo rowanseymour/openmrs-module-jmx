@@ -17,7 +17,7 @@ package org.openmrs.module.jmx;
 import javax.management.MXBean;
 
 /**
- * OpenMRS core JMX bean interface
+ * Management bean interface for OpenMRS core
  */
 @MXBean
 public interface CoreMXBean {
@@ -39,16 +39,4 @@ public interface CoreMXBean {
 	 * @return the mail server
 	 */
 	public String getMailServer();
-	
-	/**
-	 * Gets an array of started modules (ids and versions)
-	 * @return the array
-	 */
-	public String[] getStartedModules();
-	
-	/**
-	 * Gets an array of stopped modules (ids and versions)
-	 * @return the array
-	 */
-	public String[] getStoppedModules();
 }

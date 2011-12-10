@@ -14,20 +14,16 @@
 
 package org.openmrs.module.jmx.impl;
 
-import java.util.ArrayList;
-import java.util.List;
 import java.util.Map;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.openmrs.api.context.Context;
-import org.openmrs.module.Module;
-import org.openmrs.module.ModuleFactory;
 import org.openmrs.module.jmx.CoreMXBean;
 import org.openmrs.util.PrivilegeConstants;
 
 /**
- * OpenMRS Core JMX bean implementation
+ * Management bean implementation for OpenMRS core
  */
 public class CoreMXBeanImpl implements CoreMXBean {
 
@@ -55,30 +51,6 @@ public class CoreMXBeanImpl implements CoreMXBean {
 	@Override
 	public String getMailServer() {
 		return getGlobalProperty("mail.smtp_host") + ":" + getGlobalProperty("mail.smtp_port");
-	}
-
-	/**
-	 * @see org.openmrs.module.jmx.CoreMXBean#getStartedModules()
-	 */
-	@Override
-	public String[] getStartedModules() {
-		List<String> modules = new ArrayList<String>();
-		for (Module module : ModuleFactory.getStartedModules())
-			modules.add(module.getModuleId() + " (" + module.getVersion() + ")");
-		return modules.toArray(new String[] {});
-	}
-	
-	/**
-	 * @see org.openmrs.module.jmx.CoreMXBean#getLoadedModules()
-	 */
-	@Override
-	public String[] getStoppedModules() {
-		List<String> modules = new ArrayList<String>();
-		for (Module module : ModuleFactory.getLoadedModules()) {
-			if (!ModuleFactory.isModuleStarted(module))
-				modules.add(module.getModuleId() + " (" + module.getVersion() + ")");
-		}
-		return modules.toArray(new String[] {});
 	}
 
 	/**

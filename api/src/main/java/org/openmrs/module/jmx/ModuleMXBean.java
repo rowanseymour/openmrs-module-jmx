@@ -16,6 +16,9 @@ package org.openmrs.module.jmx;
 
 import javax.management.MXBean;
 
+/**
+ * Management bean interface for an OpenMRS module
+ */
 @MXBean
 public interface ModuleMXBean {
 	
@@ -24,4 +27,10 @@ public interface ModuleMXBean {
 	 * @return the version name
 	 */
 	public String getVersion();
+	
+	/**
+	 * Gets if the module is started
+	 * @return if module is started
+	 */
+	public boolean isStarted();
 }

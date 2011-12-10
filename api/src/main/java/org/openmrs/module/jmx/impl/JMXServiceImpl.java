@@ -15,9 +15,7 @@
 package org.openmrs.module.jmx.impl;
 
 import java.lang.management.ManagementFactory;
-import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 
 import javax.management.MBeanServer;
@@ -28,8 +26,10 @@ import javax.servlet.ServletContext;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.openmrs.api.impl.BaseOpenmrsService;
+import org.openmrs.module.jmx.Constants;
 import org.openmrs.module.jmx.JMXService;
 import org.openmrs.module.jmx.util.ContextProvider;
+import org.openmrs.module.jmx.util.Utils;
 
 /**
  * Implementation of JMX service
@@ -104,15 +104,7 @@ public class JMXServiceImpl extends BaseOpenmrsService implements JMXService {
 		if (path != null && path.length() > 0)
 			components.put("path", path);
 		
-		// Build qualified name from components
-		List<Map.Entry<String, String>> entries = new ArrayList<Map.Entry<String, String>>(components.entrySet());
-		StringBuilder sb = new StringBuilder();
-		sb.append(entries.get(0).getKey() + "=" + entries.get(0).getValue());
-		for (int e = 1; e < entries.size(); ++e) {
-			sb.append(",");
-			sb.append(entries.get(e).getKey() + "=" + entries.get(e).getValue());
-		}
-		
-		return new ObjectName("OpenMRS:" + sb.toString());
+		// Build qualified name from domain and components		
+		return new ObjectName(Constants.BEAN_DOMAIN + ":" + Utils.nameValueList(components));
 	}
 }

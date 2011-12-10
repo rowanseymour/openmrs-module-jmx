@@ -21,5 +21,7 @@ public class Constants {
 	
 	public static final String PRIV_MANAGE_JMX = "Manage JMX";
 	
+	// JMX constants
+	public static final String BEAN_DOMAIN = "OpenMRS";
 	public static final String CORE_BEAN_NAME = "Core";
 }

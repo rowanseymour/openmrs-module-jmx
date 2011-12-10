@@ -15,6 +15,10 @@
 package org.openmrs.module.jmx.impl;
 
 import java.lang.management.ManagementFactory;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
 import javax.management.MBeanServer;
 import javax.management.MalformedObjectNameException;
@@ -38,9 +42,9 @@ public class JMXServiceImpl extends BaseOpenmrsService implements JMXService {
 	 * @see org.openmrs.module.jmx.JMXService#registerBean(String, Object)
 	 */
 	@Override
-	public void registerBean(String name, Object bean) {
+	public void registerBean(String folder, String name, Object bean) {
 		try {
-			ObjectName objName = getObjectName(name);
+			ObjectName objName = getObjectName(folder, name);
 			MBeanServer beanServer = ManagementFactory.getPlatformMBeanServer();
 			if (beanServer.isRegistered(objName))
 				beanServer.unregisterMBean(objName);
@@ -60,9 +64,9 @@ public class JMXServiceImpl extends BaseOpenmrsService implements JMXService {
 	 * @see org.openmrs.module.jmx.JMXService#unregisterBean(String)
 	 */
 	@Override
-	public void unregisterBean(String name) {
+	public void unregisterBean(String folder, String name) {
 		try {
-			ObjectName objName = getObjectName(name);
+			ObjectName objName = getObjectName(folder, name);
 			MBeanServer beanServer = ManagementFactory.getPlatformMBeanServer();
 			if (beanServer.isRegistered(objName))
 				beanServer.unregisterMBean(objName);
@@ -76,17 +80,39 @@ public class JMXServiceImpl extends BaseOpenmrsService implements JMXService {
 		}
 	}
 	
-	private ObjectName getObjectName(String beanName) throws MalformedObjectNameException {
+	/**
+	 * Generates a qualified object name for a management bean
+	 * @param name the name
+	 * @param path the path
+	 * @return the object name
+	 * @throws MalformedObjectNameException
+	 */
+	private ObjectName getObjectName(String name, String path) throws MalformedObjectNameException {
 		// Server name is based on the context path, minus the preceding slash
 		ServletContext ctx = ContextProvider.getServletContext();
 		
+		Map<String, String> components = new HashMap<String, String>();
+		components.put("name", name);
+		
+		// Host is based on the context root to keep different OpenMRS instances separate
 		if (ctx != null) {
 			String ctxPath = ctx.getContextPath();
-			if (ctxPath.charAt(0) == '/')
-				ctxPath = ctxPath.substring(1);
-				
-			return new ObjectName("OpenMRS:path=" + ctxPath + ",name=" + beanName);
+			components.put("host", ctxPath.charAt(0) == '/' ? ctxPath.substring(1) : ctxPath);
 		}
-		return new ObjectName("OpenMRS:path=Unknown,name=" + beanName);
+		
+		// Append folder name to path
+		if (path != null && path.length() > 0)
+			components.put("path", path);
+		
+		// Build qualified name from components
+		List<Map.Entry<String, String>> entries = new ArrayList<Map.Entry<String, String>>(components.entrySet());
+		StringBuilder sb = new StringBuilder();
+		sb.append(entries.get(0).getKey() + "=" + entries.get(0).getValue());
+		for (int e = 1; e < entries.size(); ++e) {
+			sb.append(",");
+			sb.append(entries.get(e).getKey() + "=" + entries.get(e).getValue());
+		}
+		
+		return new ObjectName("OpenMRS:" + sb.toString());
 	}
 }

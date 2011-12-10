@@ -12,26 +12,14 @@
  * Copyright (C) OpenMRS, LLC.  All Rights Reserved.
  */
 
-package org.openmrs.module.jmx;
+package org.openmrs.module.jmx.impl;
 
-import org.openmrs.api.OpenmrsService;
-import org.springframework.transaction.annotation.Transactional;
+import org.openmrs.module.jmx.ModuleMXBean;
 
-@Transactional
-public interface JMXService extends OpenmrsService {
-	
-	/**
-	 * Registers the specified bean
-	 * @param name the name
-	 * @param path the path
-	 * @param bean the bean
-	 */
-	public void registerBean(String name, String path, Object bean);
-	
-	/**
-	 * Unregisters the specified bean
-	 * @param name the name
-	 * @param path the path
-	 */
-	public void unregisterBean(String name, String path);
+public class ModuleMXBeanImpl implements ModuleMXBean {
+
+	@Override
+	public String getVersion() {
+		return "1.69-BETA";
+	}
 }

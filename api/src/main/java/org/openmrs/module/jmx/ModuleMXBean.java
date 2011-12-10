@@ -14,24 +14,14 @@
 
 package org.openmrs.module.jmx;
 
-import org.openmrs.api.OpenmrsService;
-import org.springframework.transaction.annotation.Transactional;
+import javax.management.MXBean;
 
-@Transactional
-public interface JMXService extends OpenmrsService {
+@MXBean
+public interface ModuleMXBean {
 	
 	/**
-	 * Registers the specified bean
-	 * @param name the name
-	 * @param path the path
-	 * @param bean the bean
+	 * Gets the version of the module
+	 * @return the version name
 	 */
-	public void registerBean(String name, String path, Object bean);
-	
-	/**
-	 * Unregisters the specified bean
-	 * @param name the name
-	 * @param path the path
-	 */
-	public void unregisterBean(String name, String path);
+	public String getVersion();
 }

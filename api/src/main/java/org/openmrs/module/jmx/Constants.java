@@ -21,5 +21,5 @@ public class Constants {
 	
 	public static final String PRIV_MANAGE_JMX = "Manage JMX";
 	
-	public static final String CORE_BEAN_NAME = "core";
+	public static final String CORE_BEAN_NAME = "Core";
 }

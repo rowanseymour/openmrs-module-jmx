@@ -16,6 +16,9 @@ package org.openmrs.module.jmx.mbean;
 
 import javax.management.MXBean;
 
+import org.openmrs.module.jmx.aop.WithSession;
+import org.openmrs.util.PrivilegeConstants;
+
 /**
  * Management bean interface for a module
  */
@@ -43,10 +46,12 @@ public interface ModuleMBean {
 	/**
 	 * Starts the module
 	 */
+	@WithSession({PrivilegeConstants.MANAGE_GLOBAL_PROPERTIES})
 	public void start();
 	
 	/**
 	 * Stops the module
 	 */
+	@WithSession({PrivilegeConstants.MANAGE_GLOBAL_PROPERTIES})
 	public void stop();
 }

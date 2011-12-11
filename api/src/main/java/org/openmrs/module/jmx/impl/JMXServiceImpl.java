@@ -29,8 +29,8 @@ import org.openmrs.api.impl.BaseOpenmrsService;
 import org.openmrs.module.jmx.Constants;
 import org.openmrs.module.jmx.JMXService;
 import org.openmrs.module.jmx.util.ContextProvider;
+import org.openmrs.module.jmx.util.MBeanProxifier;
 import org.openmrs.module.jmx.util.Utils;
-//import org.springframework.aop.framework.ProxyFactory;
 
 /**
  * Implementation of JMX service
@@ -43,21 +43,16 @@ public class JMXServiceImpl extends BaseOpenmrsService implements JMXService {
 	 * @see org.openmrs.module.jmx.JMXService#registerBean(String, Object)
 	 */
 	@Override
-	public void registerBean(String folder, String name, Object bean) {
-		/*OpenSessionAdvice openAdvice = (OpenSessionAdvice)ContextProvider.getApplicationContext().getBean("jmxOpenSessionAdvice");
-		OpenSessionAdvice openAdvice = (OpenSessionAdvice)ContextProvider.getApplicationContext().getBean("jmxOpenSessionAdvice");
+	public void registerMBean(String folder, String name, Object mbean) {
+		Object proxiedBean = MBeanProxifier.getProxy(mbean);
 		
-		ProxyFactory proxy = new ProxyFactory(bean);
-		proxy.addAdvisor();
-		proxy.setInterceptorNames(new String[] {"jmxOpenSessionAdvice", "jmxCloseSessionAdvice"});
-		*/
 		try {
 			ObjectName objName = getObjectName(folder, name);
 			MBeanServer beanServer = ManagementFactory.getPlatformMBeanServer();
 			if (beanServer.isRegistered(objName))
 				beanServer.unregisterMBean(objName);
 			
-			beanServer.registerMBean(bean, objName);
+			beanServer.registerMBean(proxiedBean, objName);
 			
 			log.debug("Registered MBean: " + objName.toString());
 			
@@ -72,7 +67,7 @@ public class JMXServiceImpl extends BaseOpenmrsService implements JMXService {
 	 * @see org.openmrs.module.jmx.JMXService#unregisterBean(String)
 	 */
 	@Override
-	public void unregisterBean(String folder, String name) {
+	public void unregisterMBean(String folder, String name) {
 		try {
 			ObjectName objName = getObjectName(folder, name);
 			MBeanServer beanServer = ManagementFactory.getPlatformMBeanServer();

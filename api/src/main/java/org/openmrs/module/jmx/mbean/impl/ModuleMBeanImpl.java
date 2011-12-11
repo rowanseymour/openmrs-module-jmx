@@ -14,11 +14,9 @@
 
 package org.openmrs.module.jmx.mbean.impl;
 
-import org.openmrs.api.context.Context;
 import org.openmrs.module.Module;
 import org.openmrs.module.ModuleFactory;
 import org.openmrs.module.jmx.mbean.ModuleMBean;
-import org.openmrs.util.PrivilegeConstants;
 
 /**
  * Management bean implementation for a module
@@ -64,12 +62,9 @@ public class ModuleMBeanImpl implements ModuleMBean {
 	 */
 	@Override
 	public synchronized void start() {
-		Context.openSession();
-		Context.addProxyPrivilege(PrivilegeConstants.MANAGE_GLOBAL_PROPERTIES);
 		Module module = ModuleFactory.getModuleById(moduleId);
 		if (!module.isStarted())
 			ModuleFactory.startModule(module);
-		Context.closeSession();
 	}
 
 	/**
@@ -77,11 +72,8 @@ public class ModuleMBeanImpl implements ModuleMBean {
 	 */
 	@Override
 	public synchronized void stop() {
-		Context.openSession();
-		Context.addProxyPrivilege(PrivilegeConstants.MANAGE_GLOBAL_PROPERTIES);
 		Module module = ModuleFactory.getModuleById(moduleId);
 		if (module.isStarted()) 
 			ModuleFactory.stopModule(module);
-		Context.closeSession();
 	}
 }

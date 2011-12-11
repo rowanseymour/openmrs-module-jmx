@@ -16,6 +16,9 @@ package org.openmrs.module.jmx.mbean;
 
 import javax.management.MXBean;
 
+import org.openmrs.module.jmx.aop.WithSession;
+import org.openmrs.util.PrivilegeConstants;
+
 /**
  * Management bean interface for a scheduled task
  */
@@ -26,17 +29,20 @@ public interface TaskMBean {
 	 * Gets the name
 	 * @return the name
 	 */
+	@WithSession({PrivilegeConstants.MANAGE_SCHEDULER})
 	public String getName();
 	
 	/**
 	 * Gets the class name
 	 * @return the class name
 	 */
+	@WithSession({PrivilegeConstants.MANAGE_SCHEDULER})
 	public String getTaskClass();
 	
 	/**
 	 * Is the task started
 	 * @return true if started
 	 */
+	@WithSession({PrivilegeConstants.MANAGE_SCHEDULER})
 	public boolean isStarted();
 }

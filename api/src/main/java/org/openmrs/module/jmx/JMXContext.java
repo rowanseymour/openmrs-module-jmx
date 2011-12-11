@@ -25,9 +25,9 @@ import org.openmrs.module.ModuleFactory;
 import org.openmrs.module.jmx.mbean.CoreMBean;
 import org.openmrs.module.jmx.mbean.ModuleMBean;
 import org.openmrs.module.jmx.mbean.TaskMBean;
+import org.openmrs.module.jmx.mbean.impl.CoreMBeanImpl;
 import org.openmrs.module.jmx.mbean.impl.ModuleMBeanImpl;
 import org.openmrs.module.jmx.mbean.impl.TaskMBeanImpl;
-import org.openmrs.module.jmx.util.ContextProvider;
 import org.openmrs.scheduler.TaskDefinition;
 
 public class JMXContext {
@@ -50,13 +50,13 @@ public class JMXContext {
 		
 		// Register core bean
 		JMXService svc = Context.getService(JMXService.class);
-		CoreMBean bean = (CoreMBean)ContextProvider.getApplicationContext().getBean("jmxCoreMBean");
-		svc.registerBean(Constants.MBEAN_NAME_CORE, null, bean);
+		CoreMBean bean = new CoreMBeanImpl();
+		svc.registerMBean(Constants.MBEAN_NAME_CORE, null, bean);
 		
 		// Register module beans
 		for (Module module : ModuleFactory.getLoadedModules()) {
 			ModuleMBean modBean = new ModuleMBeanImpl(module.getModuleId());
-			svc.registerBean(Constants.MBEAN_NAME_MODULES, module.getModuleId(), modBean);
+			svc.registerMBean(Constants.MBEAN_NAME_MODULES, module.getModuleId(), modBean);
 			moduleBeanNames.add(module.getModuleId());
 		}
 		
@@ -64,7 +64,7 @@ public class JMXContext {
 		for (TaskDefinition taskDef : Context.getSchedulerService().getRegisteredTasks()) {
 			TaskMBean taskBean = new TaskMBeanImpl(taskDef.getId());
 			String taskName = taskDef.getName().replace(" ", "");
-			svc.registerBean(Constants.MBEAN_NAME_TASKS, taskName, taskBean);
+			svc.registerMBean(Constants.MBEAN_NAME_TASKS, taskName, taskBean);
 			taskBeanNames.add(taskName);
 		}
 	}
@@ -75,15 +75,15 @@ public class JMXContext {
 	public static void unregisterBeans() {
 		// Unregister core bean
 		JMXService svc = Context.getService(JMXService.class);
-		svc.unregisterBean(Constants.MBEAN_NAME_CORE, null);
+		svc.unregisterMBean(Constants.MBEAN_NAME_CORE, null);
 		
 		// Unregister module beans
 		for (String beanName : moduleBeanNames) 
-			svc.unregisterBean(Constants.MBEAN_NAME_MODULES, beanName);
+			svc.unregisterMBean(Constants.MBEAN_NAME_MODULES, beanName);
 		
 		// Unregister module beans
 		for (String beanName : taskBeanNames) 
-			svc.unregisterBean(Constants.MBEAN_NAME_TASKS, beanName);
+			svc.unregisterMBean(Constants.MBEAN_NAME_TASKS, beanName);
 		
 		moduleBeanNames.clear();
 		taskBeanNames.clear();

@@ -16,7 +16,6 @@ package org.openmrs.module.jmx.mbean.impl;
 
 import org.openmrs.api.context.Context;
 import org.openmrs.module.jmx.mbean.TaskMBean;
-import org.openmrs.util.PrivilegeConstants;
 
 /**
  * Management bean implementation for a scheduled task
@@ -38,11 +37,7 @@ public class TaskMBeanImpl implements TaskMBean {
 	 */
 	@Override
 	public String getName() {
-		Context.openSession();
-		Context.addProxyPrivilege(PrivilegeConstants.MANAGE_SCHEDULER);
-		String result = Context.getSchedulerService().getTask(taskId).getName();
-		Context.closeSession();
-		return result;
+		return Context.getSchedulerService().getTask(taskId).getName();
 	}
 
 	/**
@@ -50,11 +45,7 @@ public class TaskMBeanImpl implements TaskMBean {
 	 */
 	@Override
 	public String getTaskClass() {
-		Context.openSession();
-		Context.addProxyPrivilege(PrivilegeConstants.MANAGE_SCHEDULER);
-		String result = Context.getSchedulerService().getTask(taskId).getTaskClass();
-		Context.closeSession();
-		return result;
+		return Context.getSchedulerService().getTask(taskId).getTaskClass();
 	}
 	
 	/**
@@ -62,10 +53,6 @@ public class TaskMBeanImpl implements TaskMBean {
 	 */
 	@Override
 	public boolean isStarted() {
-		Context.openSession();
-		Context.addProxyPrivilege(PrivilegeConstants.MANAGE_SCHEDULER);
-		boolean result = Context.getSchedulerService().getTask(taskId).getStarted();
-		Context.closeSession();
-		return result;
+		return Context.getSchedulerService().getTask(taskId).getStarted();
 	}
 }

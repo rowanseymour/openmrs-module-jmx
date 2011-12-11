@@ -105,6 +105,6 @@ public class JMXServiceImpl extends BaseOpenmrsService implements JMXService {
 			components.put("path", path);
 		
 		// Build qualified name from domain and components		
-		return new ObjectName(Constants.BEAN_DOMAIN + ":" + Utils.nameValueList(components));
+		return new ObjectName(Constants.MBEAN_DOMAIN + ":" + Utils.nameValueList(components));
 	}
 }

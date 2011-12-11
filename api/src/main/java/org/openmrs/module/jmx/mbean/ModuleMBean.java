@@ -12,7 +12,7 @@
  * Copyright (C) OpenMRS, LLC.  All Rights Reserved.
  */
 
-package org.openmrs.module.jmx;
+package org.openmrs.module.jmx.mbean;
 
 import javax.management.MXBean;
 
@@ -20,7 +20,7 @@ import javax.management.MXBean;
  * Management bean interface for a module
  */
 @MXBean
-public interface ModuleMXBean {
+public interface ModuleMBean {
 	
 	/**
 	 * Gets the name of the module

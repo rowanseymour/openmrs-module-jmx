@@ -12,25 +12,25 @@
  * Copyright (C) OpenMRS, LLC.  All Rights Reserved.
  */
 
-package org.openmrs.module.jmx.impl;
+package org.openmrs.module.jmx.mbean.impl;
 
 import java.util.Map;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.openmrs.api.context.Context;
-import org.openmrs.module.jmx.CoreMXBean;
+import org.openmrs.module.jmx.mbean.CoreMBean;
 import org.openmrs.util.PrivilegeConstants;
 
 /**
  * Management bean implementation for OpenMRS core
  */
-public class CoreMXBeanImpl implements CoreMXBean {
+public class CoreMBeanImpl implements CoreMBean {
 
-	protected Log log = LogFactory.getLog(CoreMXBeanImpl.class);
+	protected Log log = LogFactory.getLog(CoreMBeanImpl.class);
 	
 	/**
-	 * @see org.openmrs.module.jmx.CoreMXBean#getVersion()
+	 * @see org.openmrs.module.jmx.mbean.CoreMBean#getVersion()
 	 */
 	@Override
 	public String getVersion() {
@@ -38,7 +38,7 @@ public class CoreMXBeanImpl implements CoreMXBean {
 	}
 	
 	/**
-	 * @see org.openmrs.module.jmx.CoreMXBean#getDatabaseName()
+	 * @see org.openmrs.module.jmx.mbean.CoreMBean#getDatabaseName()
 	 */
 	@Override
 	public String getDatabaseName() {
@@ -46,7 +46,7 @@ public class CoreMXBeanImpl implements CoreMXBean {
 	}
 	
 	/**
-	 * @see org.openmrs.module.jmx.CoreMXBean#getDatabaseName()
+	 * @see org.openmrs.module.jmx.mbean.CoreMBean#getDatabaseName()
 	 */
 	@Override
 	public String getMailServer() {

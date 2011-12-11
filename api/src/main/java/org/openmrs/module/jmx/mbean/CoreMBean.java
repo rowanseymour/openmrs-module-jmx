@@ -12,28 +12,31 @@
  * Copyright (C) OpenMRS, LLC.  All Rights Reserved.
  */
 
-package org.openmrs.module.jmx;
+package org.openmrs.module.jmx.mbean;
+
+import javax.management.MXBean;
 
 /**
- * Management bean interface for a scheduled task
+ * Management bean interface for OpenMRS core
  */
-public interface TaskMXBean {
+@MXBean
+public interface CoreMBean {
 	
 	/**
-	 * Gets the name
-	 * @return the name
+	 * Gets the version name of OpenMRS
+	 * @return the version
 	 */
-	public String getName();
+	public String getVersion();
 	
 	/**
-	 * Gets the class name
-	 * @return the class name
+	 * Gets name of OpenMRS database
+	 * @return the database name
 	 */
-	public String getTaskClass();
+	public String getDatabaseName();
 	
 	/**
-	 * Is the task started
-	 * @return true if started
+	 * Gets the mail server in the format [host]:[port]
+	 * @return the mail server
 	 */
-	public boolean isStarted();
+	public String getMailServer();
 }

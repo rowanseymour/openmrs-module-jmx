@@ -17,11 +17,9 @@ package org.openmrs.module.jmx;
  * Constants used by the module
  */
 public class Constants {
-	public static final String MODULE_ID = "jmx";
-	
 	// JMX constants
-	public static final String BEAN_DOMAIN = "OpenMRS";
-	public static final String CORE_BEAN_NAME = "Core";
-	public static final String MODULES_BEAN_NAME = "Modules";
-	public static final String TASKS_BEAN_NAME = "ScheduledTasks";
+	public static final String MBEAN_DOMAIN = "OpenMRS";
+	public static final String MBEAN_NAME_CORE = "Core";
+	public static final String MBEAN_NAME_MODULES = "Modules";
+	public static final String MBEAN_NAME_TASKS = "ScheduledTasks";
 }

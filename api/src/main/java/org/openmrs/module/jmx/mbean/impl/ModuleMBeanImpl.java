@@ -12,18 +12,18 @@
  * Copyright (C) OpenMRS, LLC.  All Rights Reserved.
  */
 
-package org.openmrs.module.jmx.impl;
+package org.openmrs.module.jmx.mbean.impl;
 
 import org.openmrs.api.context.Context;
 import org.openmrs.module.Module;
 import org.openmrs.module.ModuleFactory;
-import org.openmrs.module.jmx.ModuleMXBean;
+import org.openmrs.module.jmx.mbean.ModuleMBean;
 import org.openmrs.util.PrivilegeConstants;
 
 /**
  * Management bean implementation for a module
  */
-public class ModuleMXBeanImpl implements ModuleMXBean {
+public class ModuleMBeanImpl implements ModuleMBean {
 	
 	protected String moduleId;
 	
@@ -31,12 +31,12 @@ public class ModuleMXBeanImpl implements ModuleMXBean {
 	 * Constructs a module management bean
 	 * @param moduleId the module id
 	 */
-	public ModuleMXBeanImpl(String moduleId) {
+	public ModuleMBeanImpl(String moduleId) {
 		this.moduleId = moduleId;
 	}
 	
 	/**
-	 * @see org.openmrs.module.jmx.ModuleMXBean#getName()
+	 * @see org.openmrs.module.jmx.mbean.ModuleMBean#getName()
 	 */
 	@Override
 	public String getName() {
@@ -44,7 +44,7 @@ public class ModuleMXBeanImpl implements ModuleMXBean {
 	}
 
 	/**
-	 * @see org.openmrs.module.jmx.ModuleMXBean#getVersion()
+	 * @see org.openmrs.module.jmx.mbean.ModuleMBean#getVersion()
 	 */
 	@Override
 	public String getVersion() {
@@ -52,7 +52,7 @@ public class ModuleMXBeanImpl implements ModuleMXBean {
 	}
 
 	/**
-	 * @see org.openmrs.module.jmx.ModuleMXBean#isStarted()
+	 * @see org.openmrs.module.jmx.mbean.ModuleMBean#isStarted()
 	 */
 	@Override
 	public boolean isStarted() {
@@ -60,7 +60,7 @@ public class ModuleMXBeanImpl implements ModuleMXBean {
 	}
 
 	/**
-	 * @see org.openmrs.module.jmx.ModuleMXBean#start()
+	 * @see org.openmrs.module.jmx.mbean.ModuleMBean#start()
 	 */
 	@Override
 	public synchronized void start() {
@@ -73,7 +73,7 @@ public class ModuleMXBeanImpl implements ModuleMXBean {
 	}
 
 	/**
-	 * @see org.openmrs.module.jmx.ModuleMXBean#stop()
+	 * @see org.openmrs.module.jmx.mbean.ModuleMBean#stop()
 	 */
 	@Override
 	public synchronized void stop() {

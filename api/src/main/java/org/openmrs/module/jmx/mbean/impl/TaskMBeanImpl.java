@@ -12,16 +12,16 @@
  * Copyright (C) OpenMRS, LLC.  All Rights Reserved.
  */
 
-package org.openmrs.module.jmx.impl;
+package org.openmrs.module.jmx.mbean.impl;
 
 import org.openmrs.api.context.Context;
-import org.openmrs.module.jmx.TaskMXBean;
+import org.openmrs.module.jmx.mbean.TaskMBean;
 import org.openmrs.util.PrivilegeConstants;
 
 /**
  * Management bean implementation for a scheduled task
  */
-public class TaskMXBeanImpl implements TaskMXBean {
+public class TaskMBeanImpl implements TaskMBean {
 
 	protected int taskId;
 	
@@ -29,12 +29,12 @@ public class TaskMXBeanImpl implements TaskMXBean {
 	 * Constructs a scheduled task management bean
 	 * @param taskId the task id
 	 */
-	public TaskMXBeanImpl(int taskId) {
+	public TaskMBeanImpl(int taskId) {
 		this.taskId = taskId;
 	}
 	
 	/**
-	 * @see org.openmrs.module.jmx.TaskMXBean#getName()
+	 * @see org.openmrs.module.jmx.mbean.TaskMBean#getName()
 	 */
 	@Override
 	public String getName() {
@@ -46,7 +46,7 @@ public class TaskMXBeanImpl implements TaskMXBean {
 	}
 
 	/**
-	 * @see org.openmrs.module.jmx.TaskMXBean#getTaskClass()
+	 * @see org.openmrs.module.jmx.mbean.TaskMBean#getTaskClass()
 	 */
 	@Override
 	public String getTaskClass() {
@@ -58,7 +58,7 @@ public class TaskMXBeanImpl implements TaskMXBean {
 	}
 	
 	/**
-	 * @see org.openmrs.module.jmx.TaskMXBean#isStarted()
+	 * @see org.openmrs.module.jmx.mbean.TaskMBean#isStarted()
 	 */
 	@Override
 	public boolean isStarted() {

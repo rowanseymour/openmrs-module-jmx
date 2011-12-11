@@ -20,9 +20,12 @@ import java.util.List;
 import org.openmrs.api.context.Context;
 import org.openmrs.module.Module;
 import org.openmrs.module.ModuleFactory;
-import org.openmrs.module.jmx.impl.CoreMXBeanImpl;
-import org.openmrs.module.jmx.impl.ModuleMXBeanImpl;
-import org.openmrs.module.jmx.impl.TaskMXBeanImpl;
+import org.openmrs.module.jmx.mbean.CoreMBean;
+import org.openmrs.module.jmx.mbean.ModuleMBean;
+import org.openmrs.module.jmx.mbean.TaskMBean;
+import org.openmrs.module.jmx.mbean.impl.CoreMBeanImpl;
+import org.openmrs.module.jmx.mbean.impl.ModuleMBeanImpl;
+import org.openmrs.module.jmx.mbean.impl.TaskMBeanImpl;
 import org.openmrs.scheduler.TaskDefinition;
 
 public class JMXContext {
@@ -39,21 +42,21 @@ public class JMXContext {
 	public static void registerBeans() {
 		// Register core bean
 		JMXService svc = Context.getService(JMXService.class);
-		CoreMXBean bean = new CoreMXBeanImpl();
-		svc.registerBean(Constants.CORE_BEAN_NAME, null, bean);
+		CoreMBean bean = new CoreMBeanImpl();
+		svc.registerBean(Constants.MBEAN_NAME_CORE, null, bean);
 		
 		// Register module beans
 		for (Module module : ModuleFactory.getLoadedModules()) {
-			ModuleMXBean modBean = new ModuleMXBeanImpl(module.getModuleId());
-			svc.registerBean(Constants.MODULES_BEAN_NAME, module.getModuleId(), modBean);
+			ModuleMBean modBean = new ModuleMBeanImpl(module.getModuleId());
+			svc.registerBean(Constants.MBEAN_NAME_MODULES, module.getModuleId(), modBean);
 			moduleBeanNames.add(module.getModuleId());
 		}
 		
 		// Register scheduled task beans
 		for (TaskDefinition taskDef : Context.getSchedulerService().getRegisteredTasks()) {
-			TaskMXBean taskBean = new TaskMXBeanImpl(taskDef.getId());
+			TaskMBean taskBean = new TaskMBeanImpl(taskDef.getId());
 			String taskName = taskDef.getName().replace(" ", "");
-			svc.registerBean(Constants.TASKS_BEAN_NAME, taskName, taskBean);
+			svc.registerBean(Constants.MBEAN_NAME_TASKS, taskName, taskBean);
 			taskBeanNames.add(taskName);
 		}
 	}
@@ -64,15 +67,15 @@ public class JMXContext {
 	public static void unregisterBeans() {
 		// Unregister core bean
 		JMXService svc = Context.getService(JMXService.class);
-		svc.unregisterBean(Constants.CORE_BEAN_NAME, null);
+		svc.unregisterBean(Constants.MBEAN_NAME_CORE, null);
 		
 		// Unregister module beans
 		for (String beanName : moduleBeanNames) 
-			svc.unregisterBean(Constants.MODULES_BEAN_NAME, beanName);
+			svc.unregisterBean(Constants.MBEAN_NAME_MODULES, beanName);
 		
 		// Unregister module beans
 		for (String beanName : taskBeanNames) 
-			svc.unregisterBean(Constants.TASKS_BEAN_NAME, beanName);
+			svc.unregisterBean(Constants.MBEAN_NAME_TASKS, beanName);
 		
 		moduleBeanNames.clear();
 		taskBeanNames.clear();

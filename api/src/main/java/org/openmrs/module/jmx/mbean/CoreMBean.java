@@ -16,6 +16,9 @@ package org.openmrs.module.jmx.mbean;
 
 import javax.management.MXBean;
 
+import org.openmrs.module.jmx.aop.ProxySession;
+import org.openmrs.util.PrivilegeConstants;
+
 /**
  * Management bean interface for OpenMRS core
  */
@@ -26,17 +29,20 @@ public interface CoreMBean {
 	 * Gets the version name of OpenMRS
 	 * @return the version
 	 */
+	@ProxySession({PrivilegeConstants.VIEW_ADMIN_FUNCTIONS})
 	public String getVersion();
 	
 	/**
 	 * Gets name of OpenMRS database
 	 * @return the database name
 	 */
+	@ProxySession({PrivilegeConstants.VIEW_ADMIN_FUNCTIONS})
 	public String getDatabaseName();
 	
 	/**
 	 * Gets the mail server in the format [host]:[port]
 	 * @return the mail server
 	 */
+	@ProxySession
 	public String getMailServer();
 }

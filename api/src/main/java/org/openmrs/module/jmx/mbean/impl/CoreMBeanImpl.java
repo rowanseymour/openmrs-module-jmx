@@ -14,13 +14,10 @@
 
 package org.openmrs.module.jmx.mbean.impl;
 
-import java.util.Map;
-
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.openmrs.api.context.Context;
 import org.openmrs.module.jmx.mbean.CoreMBean;
-import org.openmrs.util.PrivilegeConstants;
 
 /**
  * Management bean implementation for OpenMRS core
@@ -34,7 +31,7 @@ public class CoreMBeanImpl implements CoreMBean {
 	 */
 	@Override
 	public String getVersion() {
-		return getSystemVariable("OPENMRS_VERSION");
+		return Context.getAdministrationService().getSystemVariables().get("OPENMRS_VERSION");
 	}
 	
 	/**
@@ -42,7 +39,7 @@ public class CoreMBeanImpl implements CoreMBean {
 	 */
 	@Override
 	public String getDatabaseName() {
-		return getSystemVariable("DATABASE_NAME");
+		return Context.getAdministrationService().getSystemVariables().get("DATABASE_NAME");
 	}
 	
 	/**
@@ -50,31 +47,8 @@ public class CoreMBeanImpl implements CoreMBean {
 	 */
 	@Override
 	public String getMailServer() {
-		return getGlobalProperty("mail.smtp_host") + ":" + getGlobalProperty("mail.smtp_port");
-	}
-
-	/**
-	 * Gets the value of a system variable
-	 * @param key the variable key
-	 * @return the variable value
-	 */
-	private String getSystemVariable(String key) {
-		Context.openSession();
-		Context.addProxyPrivilege(PrivilegeConstants.VIEW_ADMIN_FUNCTIONS);
-		Map<String, String> sysVars = Context.getAdministrationService().getSystemVariables();
-		Context.closeSession();
-		return sysVars.get(key);
-	}
-	
-	/**
-	 * Gets the value of a global property
-	 * @param key the property key
-	 * @return the property value
-	 */
-	private String getGlobalProperty(String key) {
-		Context.openSession();
-		String value = Context.getAdministrationService().getGlobalProperty(key);
-		Context.closeSession();
-		return value;
+		String host = Context.getAdministrationService().getGlobalProperty("mail.smtp_host");
+		String port = Context.getAdministrationService().getGlobalProperty("mail.smtp_port");
+		return host + ":" + port;
 	}
 }

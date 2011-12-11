@@ -17,18 +17,22 @@ package org.openmrs.module.jmx;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.apache.commons.logging.Log;
+import org.apache.commons.logging.LogFactory;
 import org.openmrs.api.context.Context;
 import org.openmrs.module.Module;
 import org.openmrs.module.ModuleFactory;
 import org.openmrs.module.jmx.mbean.CoreMBean;
 import org.openmrs.module.jmx.mbean.ModuleMBean;
 import org.openmrs.module.jmx.mbean.TaskMBean;
-import org.openmrs.module.jmx.mbean.impl.CoreMBeanImpl;
 import org.openmrs.module.jmx.mbean.impl.ModuleMBeanImpl;
 import org.openmrs.module.jmx.mbean.impl.TaskMBeanImpl;
+import org.openmrs.module.jmx.util.ContextProvider;
 import org.openmrs.scheduler.TaskDefinition;
 
 public class JMXContext {
+	
+	protected Log log = LogFactory.getLog(JMXContext.class);
 	
 	/**
 	 * Keep lists of the bean names that we register so we can unregister them
@@ -40,9 +44,12 @@ public class JMXContext {
 	 * Creates and registers the management beans defined by this module
 	 */
 	public static void registerBeans() {
+		moduleBeanNames.clear();
+		taskBeanNames.clear();
+		
 		// Register core bean
 		JMXService svc = Context.getService(JMXService.class);
-		CoreMBean bean = new CoreMBeanImpl();
+		CoreMBean bean = (CoreMBean)ContextProvider.getApplicationContext().getBean("jmxCoreMBean");
 		svc.registerBean(Constants.MBEAN_NAME_CORE, null, bean);
 		
 		// Register module beans

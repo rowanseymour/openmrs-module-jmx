@@ -22,6 +22,21 @@
 	
 	<bean class="org.openmrs.module.jmx.util.ContextProvider" />
 	
+	<bean id="jmxOpenSessionAdvice" class="org.openmrs.module.jmx.aop.OpenSessionAdvice" />
+	<bean id="jmxCloseSessionAdvice" class="org.openmrs.module.jmx.aop.CloseSessionAdvice" />
+	
+	<bean id="jmxCoreMBeanTarget" class="org.openmrs.module.jmx.mbean.impl.CoreMBeanImpl" />
+	
+	<bean id="jmxCoreMBean" class="org.springframework.aop.framework.ProxyFactoryBean">
+		<property name="target" ref="jmxCoreMBeanTarget" />
+		<property name="interceptorNames">
+			<list>
+				<value>jmxOpenSessionAdvice</value>
+				<value>jmxCloseSessionAdvice</value>
+			</list>
+		</property>
+	</bean>
+	
 	<bean parent="serviceContext">
 		<property name="moduleService">
 			<list>

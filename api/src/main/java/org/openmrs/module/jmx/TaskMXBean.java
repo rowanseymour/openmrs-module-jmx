@@ -11,17 +11,29 @@
  *
  * Copyright (C) OpenMRS, LLC.  All Rights Reserved.
  */
+
 package org.openmrs.module.jmx;
 
 /**
- * Constants used by the module
+ * Management bean interface for a scheduled task
  */
-public class Constants {
-	public static final String MODULE_ID = "jmx";
+public interface TaskMXBean {
 	
-	// JMX constants
-	public static final String BEAN_DOMAIN = "OpenMRS";
-	public static final String CORE_BEAN_NAME = "Core";
-	public static final String MODULES_BEAN_NAME = "Modules";
-	public static final String TASKS_BEAN_NAME = "ScheduledTasks";
+	/**
+	 * Gets the name
+	 * @return the name
+	 */
+	public String getName();
+	
+	/**
+	 * Gets the class name
+	 * @return the class name
+	 */
+	public String getTaskClass();
+	
+	/**
+	 * Is the task started
+	 * @return true if started
+	 */
+	public boolean isStarted();
 }

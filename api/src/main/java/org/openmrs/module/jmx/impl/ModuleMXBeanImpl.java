@@ -21,7 +21,7 @@ import org.openmrs.module.jmx.ModuleMXBean;
 import org.openmrs.util.PrivilegeConstants;
 
 /**
- * Management bean implementation for an OpenMRS module
+ * Management bean implementation for a module
  */
 public class ModuleMXBeanImpl implements ModuleMXBean {
 	

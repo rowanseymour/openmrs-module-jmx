@@ -22,10 +22,16 @@ import org.openmrs.module.Module;
 import org.openmrs.module.ModuleFactory;
 import org.openmrs.module.jmx.impl.CoreMXBeanImpl;
 import org.openmrs.module.jmx.impl.ModuleMXBeanImpl;
+import org.openmrs.module.jmx.impl.TaskMXBeanImpl;
+import org.openmrs.scheduler.TaskDefinition;
 
 public class JMXContext {
 	
-	protected static List<String> moduleBeanIds = new ArrayList<String>();
+	/**
+	 * Keep lists of the bean names that we register so we can unregister them
+	 */
+	protected static List<String> moduleBeanNames = new ArrayList<String>();
+	protected static List<String> taskBeanNames = new ArrayList<String>();
 	
 	/**
 	 * Creates and registers the management beans defined by this module
@@ -38,9 +44,17 @@ public class JMXContext {
 		
 		// Register module beans
 		for (Module module : ModuleFactory.getLoadedModules()) {
-			ModuleMXBean modBean1 = new ModuleMXBeanImpl(module.getModuleId());
-			svc.registerBean("Modules", module.getModuleId(), modBean1);
-			moduleBeanIds.add(module.getModuleId());
+			ModuleMXBean modBean = new ModuleMXBeanImpl(module.getModuleId());
+			svc.registerBean(Constants.MODULES_BEAN_NAME, module.getModuleId(), modBean);
+			moduleBeanNames.add(module.getModuleId());
+		}
+		
+		// Register scheduled task beans
+		for (TaskDefinition taskDef : Context.getSchedulerService().getRegisteredTasks()) {
+			TaskMXBean taskBean = new TaskMXBeanImpl(taskDef.getId());
+			String taskName = taskDef.getName().replace(" ", "");
+			svc.registerBean(Constants.TASKS_BEAN_NAME, taskName, taskBean);
+			taskBeanNames.add(taskName);
 		}
 	}
 	
@@ -53,9 +67,14 @@ public class JMXContext {
 		svc.unregisterBean(Constants.CORE_BEAN_NAME, null);
 		
 		// Unregister module beans
-		for (String moduleId : moduleBeanIds) {
-			svc.unregisterBean("Modules", moduleId);
-		}
-		moduleBeanIds.clear();
+		for (String beanName : moduleBeanNames) 
+			svc.unregisterBean(Constants.MODULES_BEAN_NAME, beanName);
+		
+		// Unregister module beans
+		for (String beanName : taskBeanNames) 
+			svc.unregisterBean(Constants.TASKS_BEAN_NAME, beanName);
+		
+		moduleBeanNames.clear();
+		taskBeanNames.clear();
 	}
 }

@@ -17,7 +17,7 @@ package org.openmrs.module.jmx;
 import javax.management.MXBean;
 
 /**
- * Management bean interface for an OpenMRS module
+ * Management bean interface for a module
  */
 @MXBean
 public interface ModuleMXBean {

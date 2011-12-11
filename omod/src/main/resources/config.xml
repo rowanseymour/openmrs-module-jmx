@@ -9,17 +9,5 @@
 	<description>Exposes server information via JMX</description>
 	<require_version>1.8.3</require_version>
 	<activator>org.openmrs.module.jmx.JMXActivator</activator>
-	<extension>
-		<point>org.openmrs.admin.maintenance.localHeader</point>
-		<class>org.openmrs.module.jmx.web.extension.html.MaintenanceLinksExt</class>
-	</extension> 
-	<privilege>
-		<name>Manage JMX</name>
-		<description>Able to manage OpenMRS JMX beans</description>
-	</privilege>
-	<messages>
-		<lang>en</lang>
-		<file>messages.properties</file>
-	</messages>
 </module>
 

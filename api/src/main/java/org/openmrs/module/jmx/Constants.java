@@ -19,9 +19,6 @@ package org.openmrs.module.jmx;
 public class Constants {
 	public static final String MODULE_ID = "jmx";
 	
-	// Privileges
-	public static final String PRIV_MANAGE_JMX = "Manage JMX";
-	
 	// JMX constants
 	public static final String BEAN_DOMAIN = "OpenMRS";
 	public static final String CORE_BEAN_NAME = "Core";

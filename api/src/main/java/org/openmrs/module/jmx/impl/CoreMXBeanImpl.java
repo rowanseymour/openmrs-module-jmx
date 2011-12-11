@@ -62,7 +62,6 @@ public class CoreMXBeanImpl implements CoreMXBean {
 		Context.openSession();
 		Context.addProxyPrivilege(PrivilegeConstants.VIEW_ADMIN_FUNCTIONS);
 		Map<String, String> sysVars = Context.getAdministrationService().getSystemVariables();
-		Context.removeProxyPrivilege(PrivilegeConstants.VIEW_ADMIN_FUNCTIONS);
 		Context.closeSession();
 		return sysVars.get(key);
 	}

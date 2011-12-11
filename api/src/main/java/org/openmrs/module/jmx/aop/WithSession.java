@@ -24,7 +24,7 @@ import java.lang.annotation.Target;
  */
 @Target( { ElementType.METHOD })
 @Retention(RetentionPolicy.RUNTIME)
-public @interface ProxySession {
+public @interface WithSession {
 	/**
 	 * Returns the list of privileges to give this session
 	 */

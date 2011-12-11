@@ -14,27 +14,22 @@
 
 package org.openmrs.module.jmx.aop;
 
-import java.lang.reflect.Method;
-
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
+import org.aopalliance.intercept.MethodInterceptor;
+import org.aopalliance.intercept.MethodInvocation;
 import org.openmrs.api.context.Context;
-import org.springframework.aop.MethodBeforeAdvice;
 
 /**
- * Advice class which creates a new OpenMRS session before a method is
- * called and gives the session the requested privileges
+ * Interceptor to wrap a method call in a new OpenMRS session with
+ * the requested privileges
  */
-public class OpenSessionAdvice implements MethodBeforeAdvice {
+public class WithSessionInterceptor implements MethodInterceptor {
 
-	protected Log log = LogFactory.getLog(OpenSessionAdvice.class);
-	
 	/**
-	 * @see org.springframework.aop.MethodBeforeAdvice#before(Method, Object[], Object)
+	 * @see org.aopalliance.intercept.MethodInterceptor#invoke(MethodInvocation)
 	 */
 	@Override
-	public void before(Method method, Object[] params, Object target) throws Throwable {
-		ProxySession annotation = method.getAnnotation(ProxySession.class);
+	public Object invoke(MethodInvocation invocation) throws Throwable {
+		WithSession annotation = invocation.getMethod().getAnnotation(WithSession.class);
 		
 		if (annotation != null) {
 			// Create new OpenMRS session
@@ -44,5 +39,14 @@ public class OpenSessionAdvice implements MethodBeforeAdvice {
 			for (String privilege : annotation.value()) 
 				Context.addProxyPrivilege(privilege);
 		}
+		
+		// Invoke method...
+		Object result = invocation.proceed();
+		
+		// Close session
+		if (annotation != null)
+			Context.closeSession();
+
+		return result;
 	}
 }

@@ -44,6 +44,7 @@ public class JMXContext {
 	 * Creates and registers the management beans defined by this module
 	 */
 	public static void registerBeans() {
+		// TODO Figure out why module is always started twice requiring this
 		moduleBeanNames.clear();
 		taskBeanNames.clear();
 		

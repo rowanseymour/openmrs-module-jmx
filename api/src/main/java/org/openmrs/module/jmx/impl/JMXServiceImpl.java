@@ -30,6 +30,7 @@ import org.openmrs.module.jmx.Constants;
 import org.openmrs.module.jmx.JMXService;
 import org.openmrs.module.jmx.util.ContextProvider;
 import org.openmrs.module.jmx.util.Utils;
+//import org.springframework.aop.framework.ProxyFactory;
 
 /**
  * Implementation of JMX service
@@ -43,6 +44,13 @@ public class JMXServiceImpl extends BaseOpenmrsService implements JMXService {
 	 */
 	@Override
 	public void registerBean(String folder, String name, Object bean) {
+		/*OpenSessionAdvice openAdvice = (OpenSessionAdvice)ContextProvider.getApplicationContext().getBean("jmxOpenSessionAdvice");
+		OpenSessionAdvice openAdvice = (OpenSessionAdvice)ContextProvider.getApplicationContext().getBean("jmxOpenSessionAdvice");
+		
+		ProxyFactory proxy = new ProxyFactory(bean);
+		proxy.addAdvisor();
+		proxy.setInterceptorNames(new String[] {"jmxOpenSessionAdvice", "jmxCloseSessionAdvice"});
+		*/
 		try {
 			ObjectName objName = getObjectName(folder, name);
 			MBeanServer beanServer = ManagementFactory.getPlatformMBeanServer();
@@ -51,7 +59,7 @@ public class JMXServiceImpl extends BaseOpenmrsService implements JMXService {
 			
 			beanServer.registerMBean(bean, objName);
 			
-			log.info("Registered MBean: " + objName.toString());
+			log.debug("Registered MBean: " + objName.toString());
 			
 		} catch (MalformedObjectNameException e) {
 			log.error("Invalid MBean name", e);
@@ -71,7 +79,7 @@ public class JMXServiceImpl extends BaseOpenmrsService implements JMXService {
 			if (beanServer.isRegistered(objName))
 				beanServer.unregisterMBean(objName);
 			
-			log.info("Unregistered MBean: " + objName.toString());
+			log.debug("Unregistered MBean: " + objName.toString());
 			
 		} catch (MalformedObjectNameException e) {
 			log.error("Invalid MBean name", e);

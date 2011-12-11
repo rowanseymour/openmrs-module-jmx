@@ -22,8 +22,7 @@
 	
 	<bean class="org.openmrs.module.jmx.util.ContextProvider" />
 	
-	<bean id="jmxOpenSessionAdvice" class="org.openmrs.module.jmx.aop.OpenSessionAdvice" />
-	<bean id="jmxCloseSessionAdvice" class="org.openmrs.module.jmx.aop.CloseSessionAdvice" />
+	<bean id="jmxWithSessionInterceptor" class="org.openmrs.module.jmx.aop.WithSessionInterceptor" />
 	
 	<bean id="jmxCoreMBeanTarget" class="org.openmrs.module.jmx.mbean.impl.CoreMBeanImpl" />
 	
@@ -31,8 +30,7 @@
 		<property name="target" ref="jmxCoreMBeanTarget" />
 		<property name="interceptorNames">
 			<list>
-				<value>jmxOpenSessionAdvice</value>
-				<value>jmxCloseSessionAdvice</value>
+				<value>jmxWithSessionInterceptor</value>
 			</list>
 		</property>
 	</bean>

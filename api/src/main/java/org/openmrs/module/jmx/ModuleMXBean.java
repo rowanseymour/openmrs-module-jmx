@@ -39,4 +39,14 @@ public interface ModuleMXBean {
 	 * @return if module is started
 	 */
 	public boolean isStarted();
+	
+	/**
+	 * Starts the module
+	 */
+	public void start();
+	
+	/**
+	 * Stops the module
+	 */
+	public void stop();
 }

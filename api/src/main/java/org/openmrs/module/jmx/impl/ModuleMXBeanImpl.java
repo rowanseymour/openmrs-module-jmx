@@ -14,8 +14,11 @@
 
 package org.openmrs.module.jmx.impl;
 
+import org.openmrs.api.context.Context;
+import org.openmrs.module.Module;
 import org.openmrs.module.ModuleFactory;
 import org.openmrs.module.jmx.ModuleMXBean;
+import org.openmrs.util.PrivilegeConstants;
 
 /**
  * Management bean implementation for an OpenMRS module
@@ -54,5 +57,31 @@ public class ModuleMXBeanImpl implements ModuleMXBean {
 	@Override
 	public boolean isStarted() {
 		return ModuleFactory.getModuleById(moduleId).isStarted();
+	}
+
+	/**
+	 * @see org.openmrs.module.jmx.ModuleMXBean#start()
+	 */
+	@Override
+	public synchronized void start() {
+		Context.openSession();
+		Context.addProxyPrivilege(PrivilegeConstants.MANAGE_GLOBAL_PROPERTIES);
+		Module module = ModuleFactory.getModuleById(moduleId);
+		if (!module.isStarted())
+			ModuleFactory.startModule(module);
+		Context.closeSession();
+	}
+
+	/**
+	 * @see org.openmrs.module.jmx.ModuleMXBean#stop()
+	 */
+	@Override
+	public synchronized void stop() {
+		Context.openSession();
+		Context.addProxyPrivilege(PrivilegeConstants.MANAGE_GLOBAL_PROPERTIES);
+		Module module = ModuleFactory.getModuleById(moduleId);
+		if (module.isStarted()) 
+			ModuleFactory.stopModule(module);
+		Context.closeSession();
 	}
 }

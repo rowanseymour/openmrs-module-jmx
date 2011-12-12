@@ -32,7 +32,7 @@ public class JMXActivator extends BaseModuleActivator {
 	public void started() {
 		log.info("Starting JMX Module");
 		
-		JMXContext.registerBeans();
+		JMXContext.registerMBeans();
 
 		log.info("Registered management beans");
 	}
@@ -44,7 +44,7 @@ public class JMXActivator extends BaseModuleActivator {
 	public void stopped() {
 		log.info("Shutting down JMX Module");
 		
-		JMXContext.unregisterBeans();
+		JMXContext.unregisterMBeans();
 				
 		log.info("Unregistered management beans");
 	}

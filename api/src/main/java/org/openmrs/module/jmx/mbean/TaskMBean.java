@@ -14,6 +14,8 @@
 
 package org.openmrs.module.jmx.mbean;
 
+import java.util.Date;
+
 import javax.management.MXBean;
 
 import org.openmrs.module.jmx.aop.WithSession;
@@ -45,4 +47,18 @@ public interface TaskMBean {
 	 */
 	@WithSession({PrivilegeConstants.MANAGE_SCHEDULER})
 	public boolean isStarted();
+	
+	/**
+	 * Gets the last execution time of the task
+	 * @return the time
+	 */
+	//@WithSession({PrivilegeConstants.MANAGE_SCHEDULER})
+	public Date getLastExecutionTime();
+	
+	/**
+	 * Gets the next execution time of the task
+	 * @return the time
+	 */
+	@WithSession({PrivilegeConstants.MANAGE_SCHEDULER})
+	public Date getNextExecutionTime();
 }

@@ -14,6 +14,10 @@
 
 package org.openmrs.module.jmx.mbean.impl;
 
+import java.util.Date;
+
+import org.apache.commons.logging.Log;
+import org.apache.commons.logging.LogFactory;
 import org.openmrs.api.context.Context;
 import org.openmrs.module.jmx.mbean.TaskMBean;
 
@@ -22,6 +26,7 @@ import org.openmrs.module.jmx.mbean.TaskMBean;
  */
 public class TaskMBeanImpl implements TaskMBean {
 
+	protected Log log = LogFactory.getLog(TaskMBeanImpl.class);
 	protected int taskId;
 	
 	/**
@@ -54,5 +59,21 @@ public class TaskMBeanImpl implements TaskMBean {
 	@Override
 	public boolean isStarted() {
 		return Context.getSchedulerService().getTask(taskId).getStarted();
+	}
+	
+	/**
+	 * @see org.openmrs.module.jmx.mbean.TaskMBean#getNextExecutionTime()
+	 */
+	@Override
+	public Date getLastExecutionTime() {
+		return Context.getSchedulerService().getTask(taskId).getLastExecutionTime();
+	}
+	
+	/**
+	 * @see org.openmrs.module.jmx.mbean.TaskMBean#getNextExecutionTime()
+	 */
+	@Override
+	public Date getNextExecutionTime() {
+		return Context.getSchedulerService().getTask(taskId).getNextExecutionTime();
 	}
 }

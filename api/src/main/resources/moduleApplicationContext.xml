@@ -22,6 +22,8 @@
 	
 	<bean class="org.openmrs.module.jmx.util.ContextProvider" />
 	
+	<bean class="org.openmrs.module.jmx.util.ContextRefreshListener" />
+	
 	<bean parent="serviceContext">
 		<property name="moduleService">
 			<list>

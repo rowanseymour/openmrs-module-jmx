@@ -38,7 +38,7 @@ public class TaskMBeanImplTest extends BaseModuleContextSensitiveTest {
     public void setup() throws Exception {
         initializeInMemoryDatabase();
         authenticate();
-        executeDataSet("Testing-data.xml");
+        executeDataSet("Testing-tasks-data.xml");
         
         JMXService svc = Context.getService(JMXService.class);
 		svc.registerMBean("Testing", "TestTask", mbean);
@@ -70,9 +70,15 @@ public class TaskMBeanImplTest extends BaseModuleContextSensitiveTest {
 		Assert.assertEquals(makeTimestamp(2000, 1, 1), mbean.getLastExecutionTime().getTime());
 	}
 	
+	@Test
+	public void getNextExecutionTime() {
+		Assert.assertNotNull(mbean.getNextExecutionTime());
+	}
+	
 	private long makeTimestamp(int year, int month, int day) {
 		Calendar calendar = new GregorianCalendar();
 		calendar.set(year, month - 1, day);
+		calendar.set(Calendar.AM_PM, Calendar.AM);
 		calendar.set(Calendar.HOUR, 0);
 		calendar.set(Calendar.MINUTE, 0);
 		calendar.set(Calendar.SECOND, 0);

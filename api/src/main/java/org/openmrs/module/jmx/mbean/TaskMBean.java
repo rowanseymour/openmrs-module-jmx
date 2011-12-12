@@ -52,7 +52,7 @@ public interface TaskMBean {
 	 * Gets the last execution time of the task
 	 * @return the time
 	 */
-	//@WithSession({PrivilegeConstants.MANAGE_SCHEDULER})
+	@WithSession({PrivilegeConstants.MANAGE_SCHEDULER})
 	public Date getLastExecutionTime();
 	
 	/**

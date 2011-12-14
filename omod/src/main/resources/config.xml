@@ -9,5 +9,10 @@
 	<description>Exposes server information via JMX</description>
 	<require_version>1.8.3</require_version>
 	<activator>org.openmrs.module.jmx.JMXActivator</activator>
+	
+	<advice>
+		<point>org.openmrs.scheduler.SchedulerService</point>
+		<class>org.openmrs.module.jmx.aop.SchedulerServiceInterceptor</class>
+	</advice>
 </module>
 

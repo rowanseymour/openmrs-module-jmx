@@ -44,6 +44,14 @@ public class JMXContext {
 	protected static List<String> taskMBeans = new ArrayList<String>();
 	
 	/**
+	 * Refreshes all of the management beans
+	 */
+	public static void refresh() {
+		unregisterMBeans();
+		registerMBeans();
+	}
+	
+	/**
 	 * Creates and registers the management beans defined by this module
 	 */
 	public static void registerMBeans() {

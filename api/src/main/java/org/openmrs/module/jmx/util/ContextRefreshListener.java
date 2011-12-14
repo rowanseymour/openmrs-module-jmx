@@ -30,11 +30,9 @@ public class ContextRefreshListener implements ApplicationListener<ContextRefres
 			
 	@Override
 	public void onApplicationEvent(ContextRefreshedEvent event) {
-		// Refresh our MBeans
-		JMXContext.unregisterMBeans();
-		JMXContext.registerMBeans();
+		// Refresh the management beans
+		JMXContext.refresh();
 		
-		log.info("Refreshed management beans");
+		log.debug("Refreshed management beans due to application context refresh");
 	}
-
 }

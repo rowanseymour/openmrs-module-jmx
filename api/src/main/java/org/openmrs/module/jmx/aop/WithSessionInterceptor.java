@@ -16,6 +16,8 @@ package org.openmrs.module.jmx.aop;
 
 import org.aopalliance.intercept.MethodInterceptor;
 import org.aopalliance.intercept.MethodInvocation;
+import org.apache.commons.logging.Log;
+import org.apache.commons.logging.LogFactory;
 import org.openmrs.api.context.Context;
 
 /**
@@ -24,6 +26,8 @@ import org.openmrs.api.context.Context;
  */
 public class WithSessionInterceptor implements MethodInterceptor {
 
+	protected Log log = LogFactory.getLog(WithSessionInterceptor.class);
+	
 	/**
 	 * @see org.aopalliance.intercept.MethodInterceptor#invoke(MethodInvocation)
 	 */

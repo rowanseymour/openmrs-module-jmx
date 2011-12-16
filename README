@@ -1,6 +1,14 @@
 JMX Module for OpenMRS
 =======================================
 
-This module exposes some OpenMRS system data such as version and running modules via the container's MBean server (which must be enabled)
+This module exposes some system monitoring data using Java Management Extensions (JMX) and provides an easy framework for other modules to publish objects using JMX.
 
-Requires OpenMRS 1.8.3
+Features:
+
+* Maintains management beans for Core, all loaded Modules and Scheduled Tasks
+* Compatible with any JMX client or system monitoring software that supports JMX (e.g. Nagios, Zabbix)
+* Provides a service which other modules can use to create management beans
+
+Requires OpenMRS 1.8.0
+
+See https://wiki.openmrs.org/display/docs/JMX+Module

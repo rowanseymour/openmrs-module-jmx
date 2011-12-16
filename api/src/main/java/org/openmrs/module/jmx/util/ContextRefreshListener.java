@@ -16,6 +16,7 @@ package org.openmrs.module.jmx.util;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
+import org.openmrs.api.context.Context;
 import org.openmrs.module.jmx.JMXContext;
 import org.springframework.context.ApplicationListener;
 import org.springframework.context.event.ContextRefreshedEvent;
@@ -30,8 +31,11 @@ public class ContextRefreshListener implements ApplicationListener<ContextRefres
 			
 	@Override
 	public void onApplicationEvent(ContextRefreshedEvent event) {
+		log.debug("Application context refreshed (session: " + Context.isSessionOpen() + ")");
+		
 		// Refresh the management beans
-		JMXContext.refresh();
+		if (Context.isSessionOpen())
+			JMXContext.refresh();
 		
 		log.debug("Refreshed management beans due to application context refresh");
 	}

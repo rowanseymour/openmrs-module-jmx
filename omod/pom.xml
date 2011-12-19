@@ -14,7 +14,7 @@
 	<description>OMOD project for JMX</description>
 
 	<dependencies>
-	   <dependency>
+	   	<dependency>
 			<groupId>org.openmrs.module</groupId>
 			<artifactId>jmx-api</artifactId>
 			<version>${project.parent.version}</version>

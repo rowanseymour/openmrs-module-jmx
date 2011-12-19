@@ -12,20 +12,14 @@
  * Copyright (C) OpenMRS, LLC.  All Rights Reserved.
  */
 
-package org.openmrs.module.jmx;
+package org.openmrs.module.jmx.util;
+
+import javax.management.MXBean;
 
 /**
- * Interfaces used in tests
+ * MBean interface for testing
  */
-interface A {}
-interface B {}
-
-/**
- * MBean implementation for testing
- */
-public class ExampleMBeanImpl implements A, ExampleMBean, B {
-	@Override
-	public int getX() {
-		return 123;
-	}
+@MXBean
+public interface ExampleMBean {
+	public int getX();
 }

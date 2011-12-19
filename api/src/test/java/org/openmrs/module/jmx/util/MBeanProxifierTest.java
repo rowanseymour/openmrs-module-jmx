@@ -19,8 +19,6 @@ import junit.framework.Assert;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.junit.Test;
-import org.openmrs.module.jmx.ExampleMBean;
-import org.openmrs.module.jmx.ExampleMBeanImpl;
 
 /**
  * Test case for ContextProvider class

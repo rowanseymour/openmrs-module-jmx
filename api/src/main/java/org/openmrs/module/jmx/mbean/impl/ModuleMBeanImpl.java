@@ -17,6 +17,8 @@ package org.openmrs.module.jmx.mbean.impl;
 import org.openmrs.module.Module;
 import org.openmrs.module.ModuleFactory;
 import org.openmrs.module.jmx.mbean.ModuleMBean;
+import org.openmrs.module.jmx.util.ContextProvider;
+import org.openmrs.module.web.WebModuleUtil;
 
 /**
  * Management bean implementation for a module
@@ -63,8 +65,10 @@ public class ModuleMBeanImpl implements ModuleMBean {
 	@Override
 	public synchronized void start() {
 		Module module = ModuleFactory.getModuleById(moduleId);
-		if (!module.isStarted())
+		if (!module.isStarted()) {
 			ModuleFactory.startModule(module);
+			WebModuleUtil.startModule(module, ContextProvider.getServletContext(), false);
+		}
 	}
 
 	/**
@@ -73,7 +77,9 @@ public class ModuleMBeanImpl implements ModuleMBean {
 	@Override
 	public synchronized void stop() {
 		Module module = ModuleFactory.getModuleById(moduleId);
-		if (module.isStarted()) 
+		if (module.isStarted()) {
 			ModuleFactory.stopModule(module);
+			WebModuleUtil.stopModule(module, ContextProvider.getServletContext());
+		}
 	}
 }

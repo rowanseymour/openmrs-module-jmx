@@ -46,12 +46,12 @@ public interface ModuleMBean {
 	/**
 	 * Starts the module
 	 */
-	@WithSession({PrivilegeConstants.MANAGE_GLOBAL_PROPERTIES})
+	@WithSession({PrivilegeConstants.MANAGE_GLOBAL_PROPERTIES, PrivilegeConstants.MANAGE_SCHEDULER})
 	public void start();
 	
 	/**
 	 * Stops the module
 	 */
-	@WithSession({PrivilegeConstants.MANAGE_GLOBAL_PROPERTIES})
+	@WithSession({PrivilegeConstants.MANAGE_GLOBAL_PROPERTIES, PrivilegeConstants.MANAGE_SCHEDULER})
 	public void stop();
 }

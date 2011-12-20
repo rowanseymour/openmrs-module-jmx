@@ -19,6 +19,7 @@ import java.lang.reflect.Method;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.openmrs.GlobalProperty;
+import org.openmrs.module.ModuleFactory;
 import org.openmrs.module.jmx.JMXContext;
 import org.springframework.aop.AfterReturningAdvice;
 
@@ -39,7 +40,16 @@ public class AdministrationServiceInterceptor implements AfterReturningAdvice {
 			
 			// Reload management beans as module may have been loaded/unloaded
 			if (property.getProperty().endsWith(".started")) {
+				// Store current class loader
+				ClassLoader clazzLoader = Thread.currentThread().getContextClassLoader();
+				
+				// Make this module's class loader active
+				Thread.currentThread().setContextClassLoader(ModuleFactory.getModuleClassLoader("jmx"));
+				
 				JMXContext.refresh(false, false, true);
+				
+				// Restore original class loader
+				Thread.currentThread().setContextClassLoader(clazzLoader);
 			
 				log.info("Refreshed management beans due to module changes");
 			}

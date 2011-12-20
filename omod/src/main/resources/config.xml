@@ -12,6 +12,10 @@
 	<activator>org.openmrs.module.jmx.JMXActivator</activator>
 	
 	<advice>
+		<point>org.openmrs.api.AdministrationService</point>
+		<class>org.openmrs.module.jmx.aop.AdministrationServiceInterceptor</class>
+	</advice>
+	<advice>
 		<point>org.openmrs.scheduler.SchedulerService</point>
 		<class>org.openmrs.module.jmx.aop.SchedulerServiceInterceptor</class>
 	</advice>

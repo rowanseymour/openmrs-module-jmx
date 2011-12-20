@@ -45,16 +45,22 @@ public class JMXContext {
 	
 	/**
 	 * Refreshes all of the management beans
+	 * @param core include the core bean
+	 * @param modules include the module beans
+	 * @param tasks include the task beans
 	 */
-	public static void refresh() {
-		unregisterMBeans();
-		registerMBeans();
+	public static void refresh(boolean core, boolean modules, boolean tasks) {
+		unregisterMBeans(core, modules, tasks);
+		registerMBeans(core, modules, tasks);
 	}
 	
 	/**
 	 * Creates and registers the management beans defined by this module
+	 * @param core include the core bean
+	 * @param modules include the module beans
+	 * @param tasks include the task beans
 	 */
-	public static void registerMBeans() {
+	public static void registerMBeans(boolean core, boolean modules, boolean tasks) {
 		// TODO Figure out why module is always started twice requiring this
 		moduleMBeans.clear();
 		taskMBeans.clear();
@@ -82,8 +88,11 @@ public class JMXContext {
 	
 	/**
 	 * Unregisters the management beans defined by this module
+	 * @param core include the core bean
+	 * @param modules include the module beans
+	 * @param tasks include the task beans
 	 */
-	public static void unregisterMBeans() {
+	public static void unregisterMBeans(boolean core, boolean modules, boolean tasks) {
 		// Unregister core bean
 		JMXService svc = Context.getService(JMXService.class);
 		svc.unregisterMBean(Constants.MBEAN_NAME_CORE, null);

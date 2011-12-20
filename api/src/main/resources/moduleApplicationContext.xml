@@ -22,7 +22,7 @@
 	
 	<bean class="org.openmrs.module.jmx.util.ContextProvider" />
 	
-	<bean class="org.openmrs.module.jmx.util.ContextRefreshListener" />
+	<bean id="jmxServiceImpl" class="org.openmrs.module.jmx.impl.JMXServiceImpl" />
 	
 	<bean parent="serviceContext">
 		<property name="moduleService">
@@ -31,9 +31,7 @@
 				<bean
 					class="org.springframework.transaction.interceptor.TransactionProxyFactoryBean">
 					<property name="transactionManager"><ref bean="transactionManager" /></property>
-					<property name="target">
-						<bean class="org.openmrs.module.jmx.impl.JMXServiceImpl" />
-					</property>
+					<property name="target"><ref bean="jmxServiceImpl" /></property>
 					<property name="preInterceptors">
 						<list>
 							<ref bean="authorizationInterceptor" />

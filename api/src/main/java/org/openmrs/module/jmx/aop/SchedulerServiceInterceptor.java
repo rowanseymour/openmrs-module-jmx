@@ -33,11 +33,11 @@ public class SchedulerServiceInterceptor implements AfterReturningAdvice {
 	 */
 	@Override
 	public void afterReturning(Object returnVal, Method method, Object[] args, Object target) throws Throwable {
-		// Reload mbeans as scheduled tasks have changed
+		// Reload management beans as scheduled tasks have changed
 		if (method.getName().equals("scheduleTask") || method.getName().equals("deleteTask")) {
-			JMXContext.refresh();
+			JMXContext.refresh(false, true, false);
 			
-			log.debug("Refreshed management beans due to scheduled task changes");
+			log.info("Refreshed management beans due to scheduled task changes");
 		}
 	}
 }
